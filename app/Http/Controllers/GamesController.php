@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 use App\Models\Cabor;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
-use DB;
+use Illuminate\Support\Facades\DB;
+
 
 class GamesController extends Controller
 {

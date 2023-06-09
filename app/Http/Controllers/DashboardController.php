@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Atlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Models\Club;
 use App\Models\GamesModel;
@@ -45,8 +45,6 @@ class DashboardController extends Controller
         $game  = GamesModel::count();
         $teamm = TeamModel::orderBy('id', 'asc')->get();
         $clubb = Club::orderBy('id', 'asc')->get();
-
-
         $awards = AwardsModel::where('cabang_id', auth::user()->cabang_id)->get();
         $events = EventsModel::where('cabang_id', auth::user()->cabang_id)->get();
         $news = News::where('cabang_id', auth::user()->cabang_id)->get();

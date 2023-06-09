@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cabor;
+use App\Models\Atlet;
+
+use App\Models\Pelatih;
+use App\Models\TeamModel;
 use Illuminate\Http\Request;
-use App\Models\User;
-use DB;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
+
+use Illuminate\Support\Facades\DB;
+
 
 
 class UsersNoAtlet extends Controller
@@ -29,17 +28,82 @@ class UsersNoAtlet extends Controller
      */
     public function index()
     {
-        $modelrole = DB::table('model_has_roles')->where('model_id', auth()->user()->id)->first();
-        $role = Role::where('id', $modelrole->role_id)->first();
-        if ($role->name == 'superadmin') {
-            // $lists = Club::orderBy('id', 'ASC')->paginate(5);
-            $lists = User::where('active_atlet', 1)->paginate(5);
-            return view('pages.usernoatlet.users', compact('lists'));
-        } else {
-            $lists = User::where('active_atlet', 1)->where('cabang_id', auth::user()->cabang_id)->paginate(5);
-            // $cabors = Cabor::get();
-            return view('pages.usernoatlet.users', compact('lists'));
-        }
+        $atlet = DB::table('users')
+            ->join('atlets', 'users.id', '=', 'atlets.iduser')
+            ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
+            ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+            ->select(
+                'users.*',
+                'atlets.*',
+                'users.name as atlet_name',
+
+                'atlets.id as atlet_id',
+                'cabors.name as cabang'
+            )
+            ->where('users.active_atlet', 1)
+            ->whereNull('atlets.deleted_at')
+            ->paginate(100);
+
+        $teams = DB::table('teams')
+            ->join('clubs', 'teams.club_id', 'clubs.id')
+            ->join('cabors', 'clubs.cabang_id', 'cabors.id')
+            ->join('users', 'teams.leader_team', '=',  'users.id')
+
+            ->select(
+                'teams.*',
+                'clubs.*',
+                'cabors.*',
+                'cabors.name as cabang',
+                'users.name as leader_team',
+                'users.name as anggota_team'
+            )
+            ->whereNull('teams.deleted_at')
+            // ->where('teams.club_id',)
+            ->paginate(100);
+
+
+        return view('pages.usernoatlet.users', compact('atlet', 'teams'));
+    }
+
+    public function showAtlet()
+    {
+        $list = Atlet::orderBy('id')
+            ->join('users', 'atlets.iduser', '=', 'users.id')
+            ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
+            ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+            ->select(
+                'users.*',
+                'users.name as atlet_name',
+                'atlets.id as atlet_id',
+                'cabors.name as cabang'
+            )
+            ->where('users.active_atlet', 1)
+            ->whereNull('atlets.deleted_at')
+            ->paginate(100);
+        return view('pages.usernoatlet.atlet', compact('list'));
+    }
+
+    public function showTeam()
+    {
+        $list = TeamModel::paginate(10); // Ganti dengan model dan data yang sesuai untuk masing-masing tabel
+        return view('pages.usernoatlet.users', compact('list'));
+    }
+
+    public function showPelatih()
+    {
+        $list = Pelatih::orderBy('id')
+            ->join('users', 'pelatih.user_id', '=', 'users.id')
+            ->join('clubs', 'pelatih.club_id', '=', 'clubs.id')
+            ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+            ->select(
+                'users.*',
+                'users.name as pelatih_name',
+                'pelatih.*',
+                'cabors.name as cabang'
+            )
+            ->whereNull('pelatih.deleted_at')
+            ->paginate(100);
+        return view('pages.usernoatlet.users', compact('list'));
     }
 
     /**

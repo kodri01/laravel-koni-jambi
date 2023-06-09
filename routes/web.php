@@ -151,5 +151,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('infoclub', [InfoClubController::class, 'index']);
     Route::group(['middleware' => ['permission:users-list|users-create|users-edit|users-delete']], function () {
         Route::resource('users', UsersNoAtlet::class);
+        Route::get('/users', [UsersNoAtlet::class, 'index'])->name('users.index');
     });
+    Route::get('/data-atlet', [UsersNoAtlet::class, 'showAtlet']);
+    Route::get('/data-team', [UsersNoAtlet::class, 'showTeam']);
+    Route::get('/data-pelatih', [UsersNoAtlet::class, 'showPelatih']);
 });

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Pelatih;
 use App\Models\User;
 use App\Models\TeamModel;
@@ -91,7 +91,7 @@ class PelatihController extends Controller
 
         $users = DB::table('users')->join('model_has_roles', 'users.id', 'model_has_roles.model_id')
             ->select('users.*', 'model_has_roles.role_id', 'model_has_roles.model_id')
-            ->where('model_has_roles.role_id', 4)->paginate(5);
+            ->where('model_has_roles.role_id', 3)->paginate(5);
         $teams = TeamModel::get();
         $clubs = Club::find($club_id);
         $cabors = Cabor::get();

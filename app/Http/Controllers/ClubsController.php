@@ -8,12 +8,13 @@ use App\Models\Club;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Cabor;
 use App\Models\TeamModel;
 use Spatie\Permission\Models\Role;
 
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\File;
 
 class ClubsController extends Controller
 {
