@@ -17,7 +17,10 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('lastname')->nullable();
+            $table->timestamp('tgl_lahir')->nullable();
             $table->text('address')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->string('no_kk')->nullable();
             $table->string('no_ktp')->nullable();
             $table->string('domisili')->nullable();
             $table->text('profile_ktp')->nullable();

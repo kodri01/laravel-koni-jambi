@@ -17,17 +17,17 @@
                     <div class="col-sm-1 mt-3 ml-1">
                         <a href="#tablePelatih" id="btnPelatih" class="btn btn-primary">Data Pelatih</a>
                     </div>
-                    <div class="col-sm-8 text-right m-3">
-                        <a href="" class="btn btn-success">Export to Excel</a>
-                    </div>
+
                 </div>
             </div>
 
             <!-- Tabel Atlet -->
             <div id="tableAtlet" class="table-responsive-sm container-fluid">
+                <a href="{{ url('/export/atlet') }}" class="btn btn-success mb-2 mt-3">Export Data Atlet</a>
+
                 <table class="table table-hover table-striped">
                     <thead>
-                        <tr class="text-center">
+                        <tr>
                             <th>No</th>
                             <th>Nama lengkap</th>
                             <th>Tanggal Lahir</th>
@@ -67,6 +67,7 @@
 
             <!-- Tabel Team -->
             <div id="tableTeam" class="table-responsive-sm container-fluid">
+                <a href="{{ url('/export/team') }}" class="btn btn-success mb-2 mt-3">Export Data Team</a>
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
@@ -103,24 +104,44 @@
 
             <!-- Tabel Pelatih -->
             <div id="tablePelatih" class="table-responsive-sm container-fluid">
+                <a href="{{ url('/export/pelatih') }}" class="btn btn-success mb-2 mt-3">Export Data Pelatih</a>
+
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Depan</th>
-                            <th>Nama Belakang</th>
-                            <th>Alamat</th>
+                            <th>Nama lengkap</th>
                             <th>Tanggal Lahir</th>
-                            <th>Email</th>
                             <th>Nomor Telepon</th>
-                            <th>Clubs</th>
-                            <th>Cabors</th>
                             <th>Nomor KK</th>
                             <th>Nomor KTP</th>
+                            <th>Alamat</th>
+                            <th>Email</th>
+                            <th>Cabors</th>
                             <th>Profil</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($pelatih as $pelatih)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td class="text-capitalize">{{ $pelatih->name }} {{ $pelatih->lastname }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ $pelatih->no_ktp }}</td>
+                                <td class="text-capitalize">{{ $pelatih->address }}</td>
+                                <td>{{ $pelatih->email }}</td>
+                                <td>{{ $pelatih->cabang }}</td>
+                                <td>
+                                    @if (!empty($pelatih->profile_pic))
+                                        <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
+                                            src="{{ asset('uploads/' . $pelatih->profile_pic) }}" alt="Image News" />
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>

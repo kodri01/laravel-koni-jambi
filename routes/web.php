@@ -10,18 +10,16 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\AtletsController;
 use App\Http\Controllers\TeamsController;
-use App\Http\Controllers\SendMailController;
 use App\Http\Controllers\RegisterAtlet;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ClubsController;
 use App\Http\Controllers\PelatihController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\CaborController;
-use App\Http\Controllers\HeaderFormController;
-use App\Http\Controllers\UsersNoAtlet;
-use App\Http\Controllers\ResponsesController;
-use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\InfoClubController;
+use App\Http\Controllers\Laporan;
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,11 +147,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('cabors', CaborController::class);
     });
     Route::get('infoclub', [InfoClubController::class, 'index']);
-    Route::group(['middleware' => ['permission:users-list|users-create|users-edit|users-delete']], function () {
-        Route::resource('users', UsersNoAtlet::class);
-        Route::get('/users', [UsersNoAtlet::class, 'index'])->name('users.index');
+    Route::group(['middleware' => ['permission:laporan-list|laporan-create|laporan-edit|laporan-delete']], function () {
+        Route::resource('laporan', LaporanController::class);
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     });
-    Route::get('/data-atlet', [UsersNoAtlet::class, 'showAtlet']);
-    Route::get('/data-team', [UsersNoAtlet::class, 'showTeam']);
-    Route::get('/data-pelatih', [UsersNoAtlet::class, 'showPelatih']);
+
+    Route::get('/export/atlet', [ExcelController::class, 'exportAtlet']);
+    Route::get('/export/team', [ExcelController::class, 'exportTeam']);
+    Route::get('/export/pelatih', [ExcelController::class, 'exportPelatih']);
 });

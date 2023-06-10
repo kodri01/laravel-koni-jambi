@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Atlet;
-
-use App\Models\Pelatih;
-use App\Models\TeamModel;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 
 
 
-class UsersNoAtlet extends Controller
+class LaporanController extends Controller
 {
 
     public function __construct()
     {
         # code...
-        $this->middleware(['permission:users-list|users-create|users-edit|users-delete']);
+        $this->middleware(['permission:laporan-list|laporan-create|laporan-edit|laporan-delete']);
     }
 
     /**
@@ -61,50 +57,27 @@ class UsersNoAtlet extends Controller
             // ->where('teams.club_id',)
             ->paginate(100);
 
-
-        return view('pages.usernoatlet.users', compact('atlet', 'teams'));
-    }
-
-    public function showAtlet()
-    {
-        $list = Atlet::orderBy('id')
-            ->join('users', 'atlets.iduser', '=', 'users.id')
-            ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
-            ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
-            ->select(
-                'users.*',
-                'users.name as atlet_name',
-                'atlets.id as atlet_id',
-                'cabors.name as cabang'
-            )
-            ->where('users.active_atlet', 1)
-            ->whereNull('atlets.deleted_at')
-            ->paginate(100);
-        return view('pages.usernoatlet.atlet', compact('list'));
-    }
-
-    public function showTeam()
-    {
-        $list = TeamModel::paginate(10); // Ganti dengan model dan data yang sesuai untuk masing-masing tabel
-        return view('pages.usernoatlet.users', compact('list'));
-    }
-
-    public function showPelatih()
-    {
-        $list = Pelatih::orderBy('id')
-            ->join('users', 'pelatih.user_id', '=', 'users.id')
+        $pelatih = DB::table('users')
+            ->join('pelatih', 'users.id', '=', 'pelatih.user_id')
             ->join('clubs', 'pelatih.club_id', '=', 'clubs.id')
             ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
             ->select(
                 'users.*',
-                'users.name as pelatih_name',
                 'pelatih.*',
+                'users.name as pelatih_name',
+
+                'pelatih.id as pelatih_id',
                 'cabors.name as cabang'
             )
+            ->where('users.active', 99)
             ->whereNull('pelatih.deleted_at')
             ->paginate(100);
-        return view('pages.usernoatlet.users', compact('list'));
+
+
+        return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

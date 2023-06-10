@@ -56,7 +56,7 @@
             <div class="col-sm-6 mt-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>List Club</h4>
+                        <h4>Join Club</h4>
                     </div>
                     <ul class="list-group list-group-flush">
                         @foreach ($clubs as $club)

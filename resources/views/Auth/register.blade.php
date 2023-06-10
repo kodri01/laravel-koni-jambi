@@ -1,7 +1,7 @@
 @include('Auth.components.header')
 <div class="container-fluid register-image">
     <div class="p-4">
-        <div class="card p-4 rounded" style="width: 50%;margin: 0 auto;">
+        <div class="card p-4 rounded" style="width: 80%;margin: 0 auto;">
             <div class="login-form-title">Register Account</div>
             <form method="POST" action="{{ route('register.add') }}" enctype="multipart/form-data">
                 @csrf
@@ -25,6 +25,48 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-4">
+                        <label for="tgl_lahir">Tanggal Lahir</label>
+                        <input type="date" value="{{ old('tgl_lahir') }}"
+                            class="form-control @error('tgl_lahir') is-invalid @enderror" id="tgl_lahir"
+                            name="tgl_lahir">
+                        @error('tgl_lahir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="no_telp">No Telpon</label>
+                        <input type="text" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp"
+                            name="no_telp">
+                        @error('no_telp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="no_ktp">No KTP</label>
+                        <input type="text" class="form-control @error('no_ktp') is-invalid @enderror" id="no_ktp"
+                            name="no_ktp">
+                        @error('no_ktp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="no_kk">No KK</label>
+                        <input type="text" class="form-control @error('no_kk') is-invalid @enderror" id="no_kk"
+                            name="no_kk">
+                        @error('no_kk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
                         <label for="email">Email</label>
                         <input type="email" value="{{ old('email') }}"
                             class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Email"
@@ -32,12 +74,6 @@
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="ktp">No KTP</label>
-                        <input type="text" class="form-control" id="ktp" name="ktp">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="pass">Password</label>
@@ -47,10 +83,6 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -92,8 +124,8 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="filektp">Foto KTP</label>
-                    <input type="file" class="form-control @error('filektp') is-invalid @enderror" id="filektp"
-                        name="filektp">
+                    <input type="file" class="form-control @error('filektp') is-invalid @enderror"
+                        id="filektp" name="filektp">
                     @error('filektp')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

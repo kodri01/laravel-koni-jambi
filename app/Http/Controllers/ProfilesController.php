@@ -72,11 +72,14 @@ class ProfilesController extends Controller
         $user->update([
             'name' => $request->firstname,
             'lastname' => $request->lastname,
+            'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
+            'no_ktp' => $request->ktp,
+            'no_kk' => $request->no_kk,
+            'address' => $request->address,
+            'domisili' => $request->domisili,
             'email' => $request->email,
             'password' => $pass,
-            'no_ktp' => $request->ktp,
-            'domisili' => $request->domisili,
-            'address' => $request->address,
             'profile_pic' => $filename,
             'profile_ktp' => $filename1,
             'cabang_id' => $request->cabor

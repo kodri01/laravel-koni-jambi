@@ -110,10 +110,10 @@
             </a>
         </li>
     </ul>
-    @can('users-list')
+    @can('laporan-list')
         <ul>
-            <li class="{{ set_active('users*') }}">
-                <a href="{{ route('users.index') }}">
+            <li class="{{ set_active('laporan*') }}">
+                <a href="{{ route('laporan.index') }}">
                     <span class="icon material-icons md-light">book</span>
                     <span class="title-bar">Laporan</span>
                 </a>

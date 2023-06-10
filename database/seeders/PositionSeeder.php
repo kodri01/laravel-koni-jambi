@@ -90,10 +90,10 @@ class PositionSeeder extends Seeder
                 'cabors-delete'
             ],
             '14' =>  [
-                'users-list',
-                'users-create',
-                'users-edit',
-                'users-delete'
+                'laporan-list',
+                'laporan-create',
+                'laporan-edit',
+                'laporan-delete'
             ]
         ];
 

@@ -8,7 +8,7 @@
                 @csrf
                 @method('PUT')
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="firstname">Firstname</label>
                         <input type="text" class="form-control" value="{{ $user->name }}" id="firstname" name="firstname"
                             placeholder="Firstname">
@@ -16,7 +16,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="lastname">Lastname</label>
                         <input type="text" class="form-control @error('lastname') is-invalid @enderror"
                             value="{{ $user->lastname }}" id="lastname" name="lastname" placeholder="Lastname">
@@ -24,9 +24,57 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group col-md-4">
+                        <label for="tgl_lahir">Tanggal Lahir</label>
+                        <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
+                            value="{{ old('tgl_lahir', \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $user->tgl_lahir)->format('Y-m-d')) }}"
+                            id="tgl_lahir" name="tgl_lahir">
+                        @error('tgl_lahir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
+                        <label for="no_telp">No Telpon</label>
+                        <input type="text" class="form-control" value="{{ $user->no_telp }}" id="no_telp"
+                            placeholder="Masukan Nomor Telpon" name="no_telp">
+                        @error('no_telp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ktp">No KTP</label>
+                        <input type="text" value="{{ $user->no_ktp }}"
+                            class="form-control @error('ktp') is-invalid @enderror" id="ktp" name="ktp"
+                            placeholder="Masukan Nomor KTP">
+                        @error('ktp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="no_kk">No KK</label>
+                        <input type="text" class="form-control" value="{{ $user->no_kk }}" id="no_kk"
+                            placeholder="Masukan Nomor Kartu Keluarga" name="no_kk">
+                        @error('no_kk')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <textarea class="form-control" name="address" id="address" cols="30" rows="10">{{ $user->address }}</textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="domisilis">Domisili</label>
+                        <input type="text" class="form-control @error('domisilis') is-invalid @enderror"
+                            value="{{ $user->domisili }}" id="domisilis" placeholder="Domisili" name="domisili">
+                        @error('domisili')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
                         <label for="inputEmail4">Email</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror"
                             value="{{ $user->email }}" id="inputEmail4" placeholder="Email" name="email">
@@ -34,19 +82,11 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="inputPassword4">Password</label>
                         <input type="password" class="form-control" id="inputPassword4" name="pass"
                             placeholder="Password">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="ktp">No KTP</label>
-                    <input type="text" class="form-control" value="{{ $user->no_ktp }}" id="ktp" name="ktp">
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <textarea class="form-control" name="address" id="address" cols="30" rows="10">{{ $user->address }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="cabor">Cabang</label>

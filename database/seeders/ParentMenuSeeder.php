@@ -29,7 +29,7 @@ class ParentMenuSeeder extends Seeder
             'Atlets',
             'Teams',
             'Cabang Olahraga',
-            'Users'
+            'Laporan'
         ];
         Menus_web::query()->truncate();
 
