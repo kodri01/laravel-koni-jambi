@@ -2,7 +2,7 @@
 <div class="container-fluid register-image">
     <div class="p-4">
         <div class="card p-4 rounded" style="width: 80%;margin: 0 auto;">
-            <div class="login-form-title">Register Account</div>
+            <div class="login-form-title text-uppercase">Atlet Registeri</div>
             <form method="POST" action="{{ route('register.add') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-row">
@@ -61,10 +61,6 @@
                     </div>
 
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
-                </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
@@ -83,6 +79,10 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <textarea class="form-control" name="address" id="address" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">

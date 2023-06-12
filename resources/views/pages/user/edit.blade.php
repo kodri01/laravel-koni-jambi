@@ -61,19 +61,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <textarea class="form-control" name="address" id="address" cols="30" rows="10">{{ $user->address }}</textarea>
-                </div>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="domisilis">Domisili</label>
-                        <input type="text" class="form-control @error('domisilis') is-invalid @enderror"
-                            value="{{ $user->domisili }}" id="domisilis" placeholder="Domisili" name="domisili">
-                        @error('domisili')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
                     <div class="form-group col-md-4">
                         <label for="inputEmail4">Email</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror"
@@ -87,6 +75,10 @@
                         <input type="password" class="form-control" id="inputPassword4" name="pass"
                             placeholder="Password">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <textarea class="form-control" name="address" id="address" cols="30" rows="10">{{ $user->address }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="cabor">Cabang</label>

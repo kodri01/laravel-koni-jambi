@@ -102,14 +102,16 @@
             </ul>
         @endcan
     @endrole
-    <ul>
-        <li class="{{ set_active('profile.show*') }}">
-            <a href="{{ route('profile.show') }}">
-                <span class="icon material-icons md-light">contact_mail</span>
-                <span class="title-bar">Profile</span>
-            </a>
-        </li>
-    </ul>
+    @hasanyrole('Kepala Club|Pelatih|Atlet')
+        <ul>
+            <li class="{{ set_active('profile.show*') }}">
+                <a href="{{ route('profile.show') }}">
+                    <span class="icon material-icons md-light">contact_mail</span>
+                    <span class="title-bar">Profile</span>
+                </a>
+            </li>
+        </ul>
+    @endhasanyrole
     @can('laporan-list')
         <ul>
             <li class="{{ set_active('laporan*') }}">

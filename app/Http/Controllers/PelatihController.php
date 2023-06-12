@@ -146,15 +146,18 @@ class PelatihController extends Controller
         $user = User::create([
             'name' => $request->firstname,
             'lastname' => $request->lastname,
+            'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
+            'no_ktp' => $request->ktp,
+            'no_kk' => $request->no_kk,
+            'address' => $request->address,
             'email' => $request->email,
             'password' => Hash::make($request->pass),
-            'no_ktp' => $request->ktp,
-            'address' => $request->address,
+            'cabang_id' => $request->cabor,
             'profile_pic' => $filename,
             'profile_ktp' => $filename1,
             'active' => 99,
-            'active_atlet' => 0,
-            'cabang_id' => $request->cabor
+            'active_atlet' => 0
         ]);
         $user->assignRole($role->name);
 
@@ -259,15 +262,18 @@ class PelatihController extends Controller
         $user->update([
             'name' => $request->firstname,
             'lastname' => $request->lastname,
+            'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
+            'no_ktp' => $request->ktp,
+            'no_kk' => $request->no_kk,
+            'address' => $request->address,
             'email' => $request->email,
             'password' => $pass,
-            'no_ktp' => $request->ktp,
-            'address' => $request->address,
+            'cabang_id' => $request->cabor,
             'profile_pic' => $filename,
             'profile_ktp' => $filename1,
             'active' => 99,
-            'active_atlet' => 0,
-            'cabang_id' => $request->cabor
+            'active_atlet' => 0
         ]);
 
         $pelatih->update([
@@ -304,119 +310,9 @@ class PelatihController extends Controller
             ->with('success', 'pelatih deleted successfully');
     }
 
-    public function eventindex($idorg)
-    {
-        # code...
-        $lists = EventOrganizations::where('idorganization', $idorg)->paginate(5);
-        return view('pages.organizations.event.index', compact('lists', 'idorg'));
-    }
-
     public function eventcreate($idorg)
     {
         # code...
         return view('pages.organizations.event.add', compact('idorg'));
-    }
-
-    public function eventstore(Request $request, $idorg)
-    {
-        # code...
-        $rules = [
-            'event' => 'required|min:3',
-            'start'  => 'required|date',
-            'end'  => 'required|date',
-            'file'      => 'required|file|mimes:jpg,jpeg,png'
-
-        ];
-
-        $messages = [
-            'event.required'  => 'pelatih wajib diisi',
-            'event.min'       => 'pelatih minimal 3 karakter',
-            'start.required'          => 'Tanggal harap diinput',
-            'end.required'        => 'Tanggal harap diinput',
-            'file.required'  => 'Foto evnet wajib diupload'
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $namefile = str_replace(' ', '_', pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME));
-        $filename  = $namefile . '_' . time() . '.' . $request->file->extension();
-        $request->file->move(public_path('uploads'), $filename);
-
-        EventOrganizations::create([
-            'idorganization' => $idorg,
-            'event_name' => $request->event,
-            'slug' => Str::slug($request->event),
-            'file' => $filename,
-            'desc' => $request->desc,
-            'start_date' => $request->start,
-            'end_date' => $request->end
-        ]);
-
-        return redirect()->to('pelatih/' . $idorg . '/event')
-            ->with('success', 'pelatih events added successfully');
-    }
-
-    public function eventedit($idorg, $id)
-    {
-        # code...
-        $eventorg = EventOrganizations::find($id);
-        return view('pages.organizations.event.edit', compact('idorg', 'eventorg'));
-    }
-
-    public function eventupdate(Request $request, $idorg, $id)
-    {
-        # code...
-        $rules = [
-            'event' => 'required|min:3',
-            'start'  => 'required|date',
-            'end'  => 'required|date',
-
-        ];
-
-        $messages = [
-            'event.required'  => 'Organization wajib diisi',
-            'event.min'       => 'Organization minimal 3 karakter',
-            'start.required'          => 'Tanggal harap diinput',
-            'end.required'        => 'Tanggal harap diinput',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $event = EventOrganizations::find($id);
-        $filename = $event->file;
-
-        if (!empty($request->file)) {
-            File::delete(public_path("uploads/" . $event->file));
-            $namefile = str_replace(' ', '_', pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME));
-            $filename  = $namefile . '_' . time() . '.' . $request->file->extension();
-            $request->file->move(public_path('uploads'), $filename);
-        }
-        $event->update([
-            'idorganization' => $request->idorg,
-            'event_name' => $request->event,
-            'slug' => Str::slug($request->event),
-            'file' => $filename,
-            'desc' => $request->desc,
-            'start_date' => $request->start,
-            'end_date' => $request->end
-        ]);
-
-        return redirect()->to('organizations/' . $idorg . '/event')
-            ->with('success', 'Organizations events updated successfully');
-    }
-
-    public function eventdestroy($idorg, $id)
-    {
-        # code...
-        EventOrganizations::find($id)->delete();
-        return redirect()->to('organizations/' . $idorg . '/event')
-            ->with('success', 'Organizations events deleted successfully');
     }
 }

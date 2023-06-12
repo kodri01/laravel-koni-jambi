@@ -22,10 +22,10 @@ class InfoClubController extends Controller
             ->select(
                 'atlets.id as atlet_id',
                 'clubs.iduser as id_userclub',
-                'clubs.club_name',
+                'clubs.club_name as club_name',
                 'clubs.file as club_file',
                 'clubs.description as club_desc',
-                'teams.team_name',
+                'teams.team_name as team_name',
                 'teams.slogan',
                 'teams.desc as team_desc',
                 'teams.file as team_file',
@@ -35,6 +35,10 @@ class InfoClubController extends Controller
             ->where('atlets.iduser', auth()->user()->id)
             ->whereNull('atlets.deleted_at')
             ->get();
+        $de = [];
+        foreach ($lists as $item) {
+            $de[] = $item->atlet;
+        }
         $users = User::where('active_atlet', 1)->get();
         $user = User::orderBy('id')->get();
         // return dd(compact('lists','users'));

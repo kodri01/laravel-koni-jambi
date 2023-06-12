@@ -42,6 +42,7 @@
             </div>
             <div class="card-footer cards-down">
                 <button type="submit" class="btn btn-primary custom-btn">Log In</button>
+                <small><a href="{{ route('register.atlet') }}">New Atlets? Register Here</a></small>
             </div>
         </form>
     </div>

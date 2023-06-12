@@ -23,7 +23,9 @@
 
             <!-- Tabel Atlet -->
             <div id="tableAtlet" class="table-responsive-sm container-fluid">
-                <a href="{{ url('/export/atlet') }}" class="btn btn-success mb-2 mt-3">Export Data Atlet</a>
+                <a href="{{ url('/export/atlet') }}" class="btn btn-danger mb-2 mt-3"> Export to
+                    <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
+                </a>
 
                 <table class="table table-hover table-striped">
                     <thead>
@@ -37,7 +39,6 @@
                             <th>Alamat</th>
                             <th>Email</th>
                             <th>Cabors</th>
-
                             <th>Profil</th>
                         </tr>
                     </thead>
@@ -46,9 +47,10 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="text-capitalize">{{ $atlet->name }} {{ $atlet->lastname }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->tgl_lahir)->format('d M Y') }}
+                                </td>
+                                <td>{{ $atlet->no_telp }}</td>
+                                <td>{{ $atlet->no_kk }}</td>
                                 <td>{{ $atlet->no_ktp }}</td>
                                 <td class="text-capitalize">{{ $atlet->address }}</td>
                                 <td>{{ $atlet->email }}</td>
@@ -67,15 +69,17 @@
 
             <!-- Tabel Team -->
             <div id="tableTeam" class="table-responsive-sm container-fluid">
-                <a href="{{ url('/export/team') }}" class="btn btn-success mb-2 mt-3">Export Data Team</a>
+                <a href="{{ url('/export/team') }}" class="btn btn-danger mb-2 mt-3"> Export to
+                    <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
+                </a>
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama Clubs</th>
                             <th>Nama Team</th>
+                            <th>Slogan Team</th>
                             <th>Team Leader</th>
-                            <th>Anggota Team</th>
                             <th>Cabors</th>
                             <th>Logo Team</th>
                         </tr>
@@ -84,11 +88,10 @@
                         @foreach ($teams as $team)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-
                                 <td>{{ $team->club_name }}</td>
                                 <td>{{ $team->team_name }}</td>
+                                <td>{{ $team->slogan }}</td>
                                 <td>{{ $team->leader_team }}</td>
-                                <td>{{ $team->anggota_team }}</td>
                                 <td>{{ $team->cabang }}</td>
                                 <td>
                                     @if (!empty($team->file))
@@ -103,8 +106,10 @@
             </div>
 
             <!-- Tabel Pelatih -->
-            <div id="tablePelatih" class="table-responsive-sm container-fluid">
-                <a href="{{ url('/export/pelatih') }}" class="btn btn-success mb-2 mt-3">Export Data Pelatih</a>
+            <div id="tablePelatih" class="table-responsive-xl container-fluid">
+                <a href="{{ url('/export/pelatih') }}" class="btn btn-danger mb-2 mt-3"> Export to
+                    <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
+                </a>
 
                 <table class="table table-hover table-striped">
                     <thead>
@@ -126,9 +131,10 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="text-capitalize">{{ $pelatih->name }} {{ $pelatih->lastname }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tgl_lahir)->format('d M Y') }}
+                                </td>
+                                <td>{{ $pelatih->no_telp }}</td>
+                                <td>{{ $pelatih->no_kk }}</td>
                                 <td>{{ $pelatih->no_ktp }}</td>
                                 <td class="text-capitalize">{{ $pelatih->address }}</td>
                                 <td>{{ $pelatih->email }}</td>

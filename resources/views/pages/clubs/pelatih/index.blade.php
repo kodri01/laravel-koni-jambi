@@ -26,6 +26,7 @@
                             <th>No</th>
                             <th>Nama Pelatih</th>
                             <th>Email</th>
+                            <th>Foto</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,7 +36,12 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $list->name }}</td>
                                 <td>{{ $list->email }}</td>
-                                {{-- <td>{{ $list->cabang_name }}</td> --}}
+                                <td>
+                                    @if (!empty($list->profile_pic))
+                                        <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
+                                            src="{{ asset('uploads/' . $list->profile_pic) }}" alt="Image News" />
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="d-flex">
                                         @can('pelatih-edit')

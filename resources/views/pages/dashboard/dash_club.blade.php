@@ -16,10 +16,11 @@
 
             <p class="card-text"> {{ $club->description }}
             </p>
-            <form method="POST" action="{{ url('dashboard/joinClub/' . $club->slug . '/insert') }}" class="m-1">
+            <form method="POST" class="d-inline" action="{{ url('dashboard/joinClub/' . $club->slug . '/insert') }}">
                 {{ csrf_field() }}
-                <button class="rounded m-2 btn btn-primary text-light p-2">Join Now!</button>
+                <button class="rounded m-2 btn btn-primary btn-sm text-light p-2">Join Now!</button>
             </form>
+            <a href="{{ url('infoclub') }}" class="btn btn-warning">Informasi club</a>
         </div>
         @if ($message = Session::get('success'))
             <div class="alert alert-success">

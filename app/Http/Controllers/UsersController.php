@@ -46,10 +46,6 @@ class UsersController extends Controller
         $rules = [
             'firstname' => 'required|min:3',
             'lastname'  => 'required|min:3',
-            'tgl_lahir'  => 'required|date',
-            'no_telp'  => 'required|min:12',
-            'no_ktp'  => 'required|min:15',
-            'no_kk'  => 'required|min:15',
             'email'     => 'required|email|unique:users',
             'pass'      => 'required|min:3',
             'domisili'  => 'required|min:3',
@@ -62,13 +58,6 @@ class UsersController extends Controller
             'firstname.min'       => 'Firstname minimal 3 karakter',
             'lastname.required'  => 'Lastname wajib diisi',
             'lastname.min'       => 'Lastname minimal 3 karakter',
-            'tgl_lahir.required'       => 'Tanggal Lahir Wajib Diisi',
-            'no_telp.min'       => 'Nomor Telp minimal 12 karakter',
-            'no_telp.required'       => 'Nomor Telpon wajib diisi',
-            'no_ktp.min'       => 'Nomor KTP minimal 15 karakter',
-            'no_ktp.required'       => 'Nomor KTP wajib diisi',
-            'no_kk.min'       => 'Nomor KK minimal 15 karakter',
-            'no_kk.required'       => 'Nomor KK wajib diisi',
             'email.required' => 'Email wajib diisi',
             'pass.required'  => 'Password wajib diisi',
             'pass.min'       => 'Password minimal 3 karakter',
@@ -103,11 +92,11 @@ class UsersController extends Controller
             'domisili' => $request->domisili,
             'email' => $request->email,
             'password' => Hash::make($request->pass),
+            'cabang_id' => $request->cabor,
             'profile_pic' => $filename,
             'profile_ktp' => $filename1,
             'active' => ($role->name == 'atlet') ? 1 : 99,
-            'active_atlet' => 0,
-            'cabang_id' => $request->cabor
+            'active_atlet' => 0
         ]);
         $user->assignRole($role->name);
 

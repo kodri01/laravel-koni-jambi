@@ -44,18 +44,16 @@ class LaporanController extends Controller
             ->join('clubs', 'teams.club_id', 'clubs.id')
             ->join('cabors', 'clubs.cabang_id', 'cabors.id')
             ->join('users', 'teams.leader_team', '=',  'users.id')
-
             ->select(
                 'teams.*',
                 'clubs.*',
                 'cabors.*',
                 'cabors.name as cabang',
                 'users.name as leader_team',
-                'users.name as anggota_team'
             )
             ->whereNull('teams.deleted_at')
-            // ->where('teams.club_id',)
             ->paginate(100);
+
 
         $pelatih = DB::table('users')
             ->join('pelatih', 'users.id', '=', 'pelatih.user_id')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -33,8 +34,8 @@ class ExcelController extends Controller
             ->select(
                 'users.name',
                 'users.lastname',
-                'users.tanggal_lahir',
-                'users.no_telepon',
+                'users.tgl_lahir',
+                'users.no_telp',
                 'users.no_kk',
                 'users.no_ktp',
                 'users.address',
@@ -46,12 +47,13 @@ class ExcelController extends Controller
             ->get();
 
         foreach ($atletCollection as $index => $atlet) {
+            $tglLahir = Carbon::parse($atlet->tgl_lahir)->format('d M Y');
             $data[] = [
                 $index + 1, // Menambahkan nomor urut pada setiap baris
                 $atlet->name,
                 $atlet->lastname,
-                $atlet->tanggal_lahir,
-                $atlet->no_telepon,
+                $tglLahir,
+                $atlet->no_telp,
                 $atlet->no_kk,
                 $atlet->no_ktp,
                 $atlet->address,
@@ -73,8 +75,8 @@ class ExcelController extends Controller
             'No',
             'Nama Klub',
             'Nama Team',
+            'Slogan Team',
             'Team Leader',
-            'Anggota',
             'Cabang Olahraga',
         ];
         $teamCollection = DB::table('teams')
@@ -84,8 +86,8 @@ class ExcelController extends Controller
             ->select(
                 'clubs.club_name',
                 'teams.team_name',
+                'teams.slogan',
                 'users.name as leader_team',
-                'users.name as anggota_team',
                 'cabors.name as cabang',
             )
             ->whereNull('teams.deleted_at')
@@ -95,8 +97,8 @@ class ExcelController extends Controller
                 $index + 1, // Menambahkan nomor urut pada setiap baris
                 $team->club_name,
                 $team->team_name,
+                $team->slogan,
                 $team->leader_team,
-                $team->anggota_team,
                 $team->cabang,
             ];
         }
@@ -129,9 +131,9 @@ class ExcelController extends Controller
             ->select(
                 'users.name',
                 'users.lastname',
-                'users.tanggal_lahir',
-                'users.nomor_telepon',
-                'users.nomor_kk',
+                'users.tgl_lahir',
+                'users.no_telp',
+                'users.no_kk',
                 'users.no_ktp',
                 'users.address',
                 'users.email',
@@ -142,12 +144,14 @@ class ExcelController extends Controller
             ->get();
 
         foreach ($pelatihCollection as $index => $pelatih) {
+            $tglLahir = Carbon::parse($pelatih->tgl_lahir)->format('d M Y');
+
             $data[] = [
                 $index + 1, // Menambahkan nomor urut pada setiap baris
                 $pelatih->name,
                 $pelatih->lastname,
-                $pelatih->tanggal_lahir,
-                $pelatih->no_telepon,
+                $tglLahir,
+                $pelatih->no_telp,
                 $pelatih->no_kk,
                 $pelatih->no_ktp,
                 $pelatih->address,

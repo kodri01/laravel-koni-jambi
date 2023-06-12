@@ -9,19 +9,55 @@
                 @csrf
                 @method('PUT')
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="firstname">Firstname</label>
-                        <input type="text" class="form-control" value="{{ $user->name }}" id="firstname" name="firstname"
-                            placeholder="Firstname">
+                        <input type="text" class="form-control @error('firstname') is-invalid @enderror"
+                            value="{{ $user->name }}" id="firstname" name="firstname" placeholder="Firstname">
                         @error('firstname')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="lastname">Lastname</label>
                         <input type="text" class="form-control @error('lastname') is-invalid @enderror"
                             value="{{ $user->lastname }}" id="lastname" name="lastname" placeholder="Lastname">
                         @error('lastname')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="tgl_lahir">Tanggal Lahir</label>
+                        <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
+                            value="{{ old('tgl_lahir', \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $user->tgl_lahir)->format('Y-m-d')) }}"
+                            id="tgl_lahir" name="tgl_lahir">
+                        @error('tgl_lahir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="no_telp">No Telpon</label>
+                        <input type="text" class="form-control" value="{{ $user->no_telp }}" id="no_telp"
+                            placeholder="Masukan Nomor Telpon" name="no_telp">
+                        @error('no_telp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ktp">No KTP</label>
+                        <input type="text" value="{{ $user->no_ktp }}"
+                            class="form-control @error('ktp') is-invalid @enderror" id="ktp" name="ktp"
+                            placeholder="Masukan Nomor KTP">
+                        @error('ktp')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="no_kk">No KK</label>
+                        <input type="text" class="form-control" value="{{ $user->no_kk }}" id="no_kk"
+                            placeholder="Masukan Nomor Kartu Keluarga" name="no_kk">
+                        @error('no_kk')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -40,10 +76,6 @@
                         <input type="password" class="form-control" id="inputPassword4" name="pass"
                             placeholder="Password">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="ktp">No KTP</label>
-                    <input type="text" class="form-control" value="{{ $user->no_ktp }}" id="ktp" name="ktp">
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Address</label>

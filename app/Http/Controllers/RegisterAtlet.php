@@ -97,6 +97,6 @@ class RegisterAtlet extends Controller
         ]);
         $user->assignRole($role->name);
 
-        return redirect()->route('tologin')->with('success', 'Register successfully');
+        return redirect()->route('login')->with('success', 'Register successfully');
     }
 }

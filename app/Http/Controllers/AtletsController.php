@@ -120,15 +120,18 @@ class AtletsController extends Controller
         $user = User::create([
             'name' => $request->firstname,
             'lastname' => $request->lastname,
+            'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
+            'no_ktp' => $request->ktp,
+            'no_kk' => $request->no_kk,
+            'address' => $request->address,
             'email' => $request->email,
             'password' => Hash::make($request->pass),
-            'no_ktp' => $request->ktp,
-            'address' => $request->address,
+            'cabang_id' => $request->cabor,
             'profile_pic' => $filename,
             'profile_ktp' => $filename1,
             'active' => 1,
-            'active_atlet' => 1,
-            'cabang_id' => $request->cabor
+            'active_atlet' => 1
         ]);
         $insertid = $user->id;
         Atlet::create([
@@ -227,14 +230,17 @@ class AtletsController extends Controller
         $user->update([
             'name' => $request->firstname,
             'lastname' => $request->lastname,
+            'tgl_lahir' => $request->tgl_lahir,
+            'no_telp' => $request->no_telp,
+            'no_ktp' => $request->ktp,
+            'no_kk' => $request->no_kk,
+            'address' => $request->address,
             'email' => $request->email,
             'password' => $pass,
-            'no_ktp' => $request->ktp,
-            'address' => $request->address,
+            'cabang_id' => $request->cabor,
             'profile_pic' => $filename,
             'profile_ktp' => $filename1,
-            'active' => 1,
-            'cabang_id' => $request->cabor
+            'active' => 1
         ]);
 
         return redirect()->to('clubs/' . $club_id . '/atlets')
@@ -268,23 +274,23 @@ class AtletsController extends Controller
         return view('pages.clubs.atlets.sendmail');
     }
 
-    public function sendmail(Request $request)
-    {
-        # code...
-        $details = [
-            'title' => 'Hallo Calon atlet',
-            'body' => $request->message
-        ];
+    // public function sendmail(Request $request)
+    // {
+    //     # code...
+    //     $details = [
+    //         'title' => 'Hallo Calon atlet',
+    //         'body' => $request->message
+    //     ];
 
-        try {
-            \Mail::to($request->mail)->send(new \App\Mail\EsportMail($details));
-        } catch (\Exception $e) {
-            echo "Email gagal dikirim karena $e.";
-        }
+    //     try {
+    //         \mail::to($request->mail)->send(new \App\Mail\EsportMail($details));
+    //     } catch (\Exception $e) {
+    //         echo "Email gagal dikirim karena $e.";
+    //     }
 
-        return redirect()->route('atlets.index')
-            ->with('success', 'atlets send successfully');
-    }
+    //     return redirect()->route('atlets.index')
+    //         ->with('success', 'atlets send successfully');
+    // }
 
     public function selectatlet($club_id)
     {

@@ -31,6 +31,7 @@ class TeamsController extends Controller
         $modelrole = DB::table('model_has_roles')->where('model_id', auth()->user()->id)->first();
         $role = Role::where('id', $modelrole->role_id)->first();
         if ($role->name == 'superadmin') {
+
             $teams = TeamModel::orderBy('id', 'ASC')->where('club_id', $club_id)->paginate(7);
             return view('pages.clubs.teams.index', compact('teams', 'club_id'));
         } else {
@@ -54,6 +55,7 @@ class TeamsController extends Controller
             ->select('users.*', 'atlets.iduser as atlet_user', 'cabors.name as nama_cabang')
             ->where('clubs.id', $club_id)
             ->where('users.active', 1)
+            ->where('users.active_atlet', 1)
             ->where('atlets.deleted_at', null)
             ->get();
         $games = GamesModel::get();

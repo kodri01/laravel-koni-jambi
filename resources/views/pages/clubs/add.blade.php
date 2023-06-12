@@ -16,10 +16,10 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="user">Kepala Cabor</label>
+                    <label for="user">Kepala Club</label>
                     <select name="user" id="user" class="form-control @error('user') is-invalid @enderror">
                         @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->domisili }}</option>
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
                     @error('user')

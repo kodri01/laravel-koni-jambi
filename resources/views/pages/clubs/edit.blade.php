@@ -16,11 +16,11 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="user">Kepala Cabor</label>
+                    <label for="user">Kepala Club</label>
                     <select name="user" id="user" class="form-control @error('user') is-invalid @enderror">
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" {{ $user->id == $club->iduser ? 'selected' : '' }}>
-                                {{ $user->name }} - {{ $user->domisili }}</option>
+                                {{ $user->name }}</option>
                         @endforeach
                     </select>
                     @error('user')
