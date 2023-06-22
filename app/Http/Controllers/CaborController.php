@@ -17,7 +17,7 @@ class CaborController extends Controller
     public function index()
     {
         //
-        $lists = Cabor::where('user_id', auth::user()->id)->paginate(10);
+        $lists = Cabor::orderBy('id')->paginate(10);
         return view('pages.cabor.index', compact('lists'));
     }
 
@@ -61,7 +61,7 @@ class CaborController extends Controller
         ]);
 
         return redirect()->route('cabors.index')
-            ->with('success', 'Cabang create successfully');
+            ->with('success', 'Cabang Olahraga create successfully');
     }
 
     /**
@@ -120,7 +120,7 @@ class CaborController extends Controller
         ]);
 
         return redirect()->route('cabors.index')
-            ->with('success', 'Cabang update successfully');
+            ->with('success', 'Cabang Olahraga update successfully');
     }
 
     /**
@@ -134,6 +134,6 @@ class CaborController extends Controller
         //
         Cabor::find($id)->delete();
         return redirect()->route('cabors.index')
-            ->with('success', 'Cabang deleted successfully');
+            ->with('success', 'Cabang Olahraga deleted successfully');
     }
 }

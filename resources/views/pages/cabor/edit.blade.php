@@ -8,7 +8,7 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="clubname">Nama Cabang</label>
+                    <label for="clubname">Nama Cabang Olahraga</label>
                     <input type="text" value="{{ $cabor->name }}" class="form-control @error('name') is-invalid @enderror"
                         id="name" name="name" placeholder="Nama Cabang">
                     @error('name')

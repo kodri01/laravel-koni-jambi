@@ -3,12 +3,17 @@
 @section('content')
     <div class="container-fluid">
         <div class="bg-white rounded p-3 mb-2">
-            <h2 class="color-title mt-1 mb-1">List Cabor</h2>
+            <h2 class="color-title mt-1 mb-1">List Cabang Olahraga</h2>
         </div>
         <div class="wrapper-table p-3 bg-white rounded">
+            @if (Session::has('success'))
+                <div class="alert alert-success">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
             <div class="w-100 mt-3 mb-3 text-right">
 
-                <a class="btn btn-primary" href="{{ route('cabors.create') }}">Tambah Cabor</a>
+                <a class="btn btn-primary" href="{{ route('cabors.create') }}">Tambah Cabang Olahraga</a>
 
             </div>
             <div class="table-responsive-sm">
@@ -16,7 +21,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama Cabor</th>
+                            <th>Nama Cabang Olahraga</th>
                             <th>Action</th>
                         </tr>
                     </thead>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,7 @@ class LaporanController extends Controller
                 'users.*',
                 'atlets.*',
                 'users.name as atlet_name',
-
+                'clubs.club_name',
                 'atlets.id as atlet_id',
                 'cabors.name as cabang'
             )
@@ -40,19 +41,26 @@ class LaporanController extends Controller
             ->whereNull('atlets.deleted_at')
             ->paginate(100);
 
+
         $teams = DB::table('teams')
             ->join('clubs', 'teams.club_id', 'clubs.id')
             ->join('cabors', 'clubs.cabang_id', 'cabors.id')
-            ->join('users', 'teams.leader_team', '=',  'users.id')
+            ->join('users as leaders', 'teams.leader_team', '=', 'leaders.id')
             ->select(
                 'teams.*',
                 'clubs.*',
                 'cabors.*',
                 'cabors.name as cabang',
-                'users.name as leader_team',
+                'leaders.name as leader_team'
             )
             ->whereNull('teams.deleted_at')
             ->paginate(100);
+
+        foreach ($teams as $team) {
+            $atletIds = json_decode($team->atlet);
+            $atletUsers = User::whereIn('id', $atletIds)->get();
+            $team->anggota_team = $atletUsers;
+        }
 
 
         $pelatih = DB::table('users')
@@ -63,7 +71,7 @@ class LaporanController extends Controller
                 'users.*',
                 'pelatih.*',
                 'users.name as pelatih_name',
-
+                'clubs.club_name',
                 'pelatih.id as pelatih_id',
                 'cabors.name as cabang'
             )

@@ -1,11 +1,11 @@
 @extends('master')
-@section('title', '- Users')
+@section('title', '- Laporan')
 @section('content')
-    <div class="container-fluid">
+    <div class="">
         <div class="bg-white rounded p-3 mb-3">
             <h2 class="color-title mt-1 mb-1">Laporan KONI</h2>
         </div>
-        <div class="wrapper-table p-3 bg-white rounded">
+        <div class="wrapper-table bg-white rounded">
             <div class="w-100 ml-3">
                 <div class="row">
                     <div class="col-sm-1 mt-3">
@@ -22,12 +22,11 @@
             </div>
 
             <!-- Tabel Atlet -->
-            <div id="tableAtlet" class="table-responsive-sm container-fluid">
+            <div id="tableAtlet" class="table-responsive-xxl container-fluid">
                 <a href="{{ url('/export/atlet') }}" class="btn btn-danger mb-2 mt-3"> Export to
                     <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
                 </a>
-
-                <table class="table table-hover table-striped">
+                <table class="table table-hover ">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -38,6 +37,7 @@
                             <th>Nomor KTP</th>
                             <th>Alamat</th>
                             <th>Email</th>
+                            <th>Clubs</th>
                             <th>Cabors</th>
                             <th>Profil</th>
                         </tr>
@@ -54,6 +54,7 @@
                                 <td>{{ $atlet->no_ktp }}</td>
                                 <td class="text-capitalize">{{ $atlet->address }}</td>
                                 <td>{{ $atlet->email }}</td>
+                                <td>{{ $atlet->club_name }}</td>
                                 <td>{{ $atlet->cabang }}</td>
                                 <td>
                                     @if (!empty($atlet->profile_pic))
@@ -80,11 +81,13 @@
                             <th>Nama Team</th>
                             <th>Slogan Team</th>
                             <th>Team Leader</th>
+                            <th>Anggota Team</th>
                             <th>Cabors</th>
                             <th>Logo Team</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($teams as $team)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -92,6 +95,13 @@
                                 <td>{{ $team->team_name }}</td>
                                 <td>{{ $team->slogan }}</td>
                                 <td>{{ $team->leader_team }}</td>
+                                <td>
+                                    <ul>
+                                        @foreach ($team->anggota_team as $anggota)
+                                            <li>{{ $anggota->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
                                 <td>{{ $team->cabang }}</td>
                                 <td>
                                     @if (!empty($team->file))
@@ -101,6 +111,7 @@
                                 </td>
                             </tr>
                         @endforeach
+
                     </tbody>
                 </table>
             </div>
@@ -111,44 +122,48 @@
                     <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
                 </a>
 
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama lengkap</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Nomor Telepon</th>
-                            <th>Nomor KK</th>
-                            <th>Nomor KTP</th>
-                            <th>Alamat</th>
-                            <th>Email</th>
-                            <th>Cabors</th>
-                            <th>Profil</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($pelatih as $pelatih)
+                <div class="table-responsive-xxl">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td class="text-capitalize">{{ $pelatih->name }} {{ $pelatih->lastname }}</td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tgl_lahir)->format('d M Y') }}
-                                </td>
-                                <td>{{ $pelatih->no_telp }}</td>
-                                <td>{{ $pelatih->no_kk }}</td>
-                                <td>{{ $pelatih->no_ktp }}</td>
-                                <td class="text-capitalize">{{ $pelatih->address }}</td>
-                                <td>{{ $pelatih->email }}</td>
-                                <td>{{ $pelatih->cabang }}</td>
-                                <td>
-                                    @if (!empty($pelatih->profile_pic))
-                                        <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
-                                            src="{{ asset('uploads/' . $pelatih->profile_pic) }}" alt="Image News" />
-                                    @endif
-                                </td>
+                                <th>No</th>
+                                <th>Nama lengkap</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Nomor Telepon</th>
+                                <th>Nomor KK</th>
+                                <th>Nomor KTP</th>
+                                <th>Alamat</th>
+                                <th>Email</th>
+                                <th>Clubs</th>
+                                <th>Cabors</th>
+                                <th>Profil</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($pelatih as $pelatih)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-capitalize">{{ $pelatih->name }} {{ $pelatih->lastname }}</td>
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tgl_lahir)->format('d M Y') }}
+                                    </td>
+                                    <td>{{ $pelatih->no_telp }}</td>
+                                    <td>{{ $pelatih->no_kk }}</td>
+                                    <td>{{ $pelatih->no_ktp }}</td>
+                                    <td class="text-capitalize">{{ $pelatih->address }}</td>
+                                    <td>{{ $pelatih->email }}</td>
+                                    <td>{{ $pelatih->club_name }}</td>
+                                    <td>{{ $pelatih->cabang }}</td>
+                                    <td>
+                                        @if (!empty($pelatih->profile_pic))
+                                            <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
+                                                src="{{ asset('uploads/' . $pelatih->profile_pic) }}" alt="Image News" />
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

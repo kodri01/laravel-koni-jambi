@@ -3,11 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h2>Tambah Cabor</h2>
+            <h2>Tambah Cabang Olahraga</h2>
             <form method="POST" action="{{ route('cabors.store') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="clubname">Nama Cabor</label>
+                    <label for="clubname">Nama Cabang Olahraga</label>
                     <input type="text" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror"
                         id="name" name="name" placeholder="Nama Cabor">
                     @error('name')

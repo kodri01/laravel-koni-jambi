@@ -5,7 +5,7 @@
 
     <div class="login-form form-input-login">
         <form action="{{ route('tologin') }}" method="post">
-            <div class="login-form-title">Account Login</div>
+            <div class="login-form-title">KONI Provinsi Jambi</div>
             @csrf
             <div class="card-body">
                 @if (session('errors'))
