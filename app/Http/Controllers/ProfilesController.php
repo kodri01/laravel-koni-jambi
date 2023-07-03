@@ -77,7 +77,6 @@ class ProfilesController extends Controller
             'no_ktp' => $request->ktp,
             'no_kk' => $request->no_kk,
             'address' => $request->address,
-            'domisili' => $request->domisili,
             'email' => $request->email,
             'password' => $pass,
             'profile_pic' => $filename,

@@ -169,7 +169,7 @@ class PelatihController extends Controller
         ]);
 
         return redirect()->to('clubs/' . $club_id . '/pelatih')
-            ->with('success', 'pelatihs create successfully');
+            ->with('success', 'Pelatih create successfully');
     }
 
     /**
@@ -215,7 +215,6 @@ class PelatihController extends Controller
         $rules = [
             'firstname' => 'required|min:3',
             'lastname'  => 'required|min:3',
-            'email'     => 'required|email|unique:users,email,' . $id,
         ];
 
         $messages = [

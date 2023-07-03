@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label for="clubname">Nama Cabang Olahraga</label>
                     <input type="text" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror"
-                        id="name" name="name" placeholder="Nama Cabor">
+                        id="name" name="name" placeholder="Nama Cabang Olahraga">
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

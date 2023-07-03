@@ -48,7 +48,6 @@ class UsersController extends Controller
             'lastname'  => 'required|min:3',
             'email'     => 'required|email|unique:users',
             'pass'      => 'required|min:3',
-            'domisili'  => 'required|min:3',
             'file'      => 'required|file|mimes:jpg,jpeg,bmp,png',
             'filektp'   => 'required|file|mimes:jpg,jpeg,bmp,png'
         ];
@@ -63,7 +62,7 @@ class UsersController extends Controller
             'pass.min'       => 'Password minimal 3 karakter',
             'file.required'  => 'Foto profile wajib diupload',
             'filektp.required'  => 'Foto KTP wajib diupload',
-            'domisili.required' => 'Domisili wajib diisi',
+
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

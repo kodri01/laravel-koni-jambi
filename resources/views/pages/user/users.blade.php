@@ -5,6 +5,11 @@
         <div class="bg-white rounded p-3 mb-2">
             <h2 class="color-title mt-1 mb-1">List Users</h2>
         </div>
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         <div class="wrapper-table p-3 bg-white rounded">
             <div class="w-100 mt-3 mb-3 text-right">
                 @can('admins-create')

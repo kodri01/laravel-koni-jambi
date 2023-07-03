@@ -34,10 +34,16 @@ class AwardsController extends Controller
         $modelrole = DB::table('model_has_roles')->where('model_id', auth()->user()->id)->first();
         $role = Role::where('id', $modelrole->role_id)->first();
         if ($role->name == 'superadmin') {
-            $lists = AwardsModel::orderBy('id', 'ASC')->paginate(5);
+            $lists = AwardsModel::orderBy('id', 'ASC')
+                ->leftJoin('cabors', 'awards.cabang_id', '=', 'cabors.id')
+                ->select('awards.*', 'cabors.name')
+                ->paginate(5);
             return view('pages.awards.index', compact('lists'));
         } else {
-            $lists = AwardsModel::where('cabang_id', auth::user()->cabang_id)->paginate(5);
+            $lists = AwardsModel::orderBy('id', 'ASC')
+                ->leftJoin('cabors', 'awards.cabang_id', '=', 'cabors.id')
+                ->select('awards.*', 'cabors.name')
+                ->where('cabang_id', auth::user()->cabang_id)->paginate(5);
             return view('pages.awards.index', compact('lists'));
         }
     }

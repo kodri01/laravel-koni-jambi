@@ -5,6 +5,11 @@
         <div class="bg-white rounded p-3 mb-2">
             <h2 class="color-title mt-1 mb-1">List Award</h2>
         </div>
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
         <div class="wrapper-table p-3 bg-white rounded">
             <div class="w-100 mt-3 mb-3 text-right">
                 @can('awards-create')
@@ -18,7 +23,8 @@
                             <th>No</th>
                             <th>Nama Award</th>
                             <th>Award Logo</th>
-                            @can('award-edit')
+                            <th>Cabor</th>
+                            @can('awards-edit')
                                 <th>Action</th>
                             @endcan
                         </tr>
@@ -30,6 +36,7 @@
                                 <td>{{ $list->award_name }}</td>
                                 <td><img style="width: 50px; height: auto;" class="img-thumbnail text-center"
                                         src="{{ asset('uploads/' . $list->award_logo) }}" alt="Image Award" /></td>
+                                <td>{{ $list->name }}</td>
                                 <td>
                                     <div class="d-flex">
                                         @can('awards-edit')

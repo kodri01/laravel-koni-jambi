@@ -16,6 +16,7 @@
                 <a class="btn btn-primary" href="{{ route('cabors.create') }}">Tambah Cabang Olahraga</a>
 
             </div>
+
             <div class="table-responsive-sm">
                 <table class="table table-hover table-striped">
                     <thead>

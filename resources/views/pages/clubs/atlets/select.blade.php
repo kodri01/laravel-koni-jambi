@@ -8,9 +8,9 @@
                 @csrf
                 <div class="form-group">
                     <label for="selectuser">Nama Atlet</label>
-                    <select name="selectuser" id="selectuser" class="form-control">
+                    <select name="selectuser" id="selectuser" class="form-control text-capitalize">
                         @foreach ($lists as $list)
-                            <option value="{{ $list->id }}">{{ $list->name }}</option>
+                            <option value="{{ $list->id }}">{{ $list->name }} {{ $list->lastname }}</option>
                         @endforeach
                     </select>
                 </div>

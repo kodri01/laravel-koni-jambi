@@ -305,7 +305,7 @@ class AtletsController extends Controller
     public function directjoin(Request $request, $club_id)
     {
         # code...
-        Atlet::create([
+        Atlet::updated([
             'iduser' => $request->selectuser,
             'club_id' => $club_id,
         ]);
