@@ -17,7 +17,7 @@ class CaborController extends Controller
     public function index()
     {
         //
-        $lists = Cabor::orderBy('id')->paginate(10);
+        $lists = Cabor::orderBy('id')->paginate(50);
         return view('pages.cabor.index', compact('lists'));
     }
 

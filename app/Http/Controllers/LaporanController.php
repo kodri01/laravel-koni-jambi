@@ -48,10 +48,12 @@ class LaporanController extends Controller
             ->join('users as leaders', 'teams.leader_team', '=', 'leaders.id')
             ->select(
                 'teams.*',
+                'teams.file as file_team',
                 'clubs.*',
                 'cabors.*',
                 'cabors.name as cabang',
-                'leaders.name as leader_team'
+                'leaders.name as leader_team',
+                'leaders.lastname as leader_lastname',
             )
             ->whereNull('teams.deleted_at')
             ->paginate(100);

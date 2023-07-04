@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TeamExport;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,7 +15,15 @@ class ExcelController extends Controller
 
     public function exportAtlet()
     {
-        $data = [];
+        $data[] = [
+            'KOMITE OLAHRAGA NASIONAL INDONESIA (KONI) PROVINSI JAMBI'
+        ];
+        $data[] = [
+            'Jl. Halim Perdana Kusuma No.40, Sungai Asam, Kec. Ps. Jambi, Kota Jambi, Jambi 36123'
+        ];
+        $data[] = [
+            ''
+        ];
         $data[] = [
             'No',
             'Nama Lengkap',
@@ -26,6 +35,7 @@ class ExcelController extends Controller
             'Email',
             'Cabang Olahraga',
         ];
+
         $atletCollection = DB::table('users')
             ->join('atlets', 'users.id', '=', 'atlets.iduser')
             ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
@@ -61,23 +71,35 @@ class ExcelController extends Controller
             ];
         }
 
+        // array_unshift($data, ['Laporan Data Atlet KONI Provinsi Jambi Tahun 2023']);
+
         $dateTime = date('Ymd_His');
         $fileName = 'data_atlet_' . $dateTime . '.xlsx';
 
         return Excel::download(new \App\Exports\AtletExport($data), $fileName);
     }
 
+
+
     public function exportTeam()
     {
-        $data = [];
+        $data[] = [
+            'KOMITE OLAHRAGA NASIONAL INDONESIA (KONI) PROVINSI JAMBI'
+        ];
+        $data[] = [
+            'Jl. Halim Perdana Kusuma No.40, Sungai Asam, Kec. Ps. Jambi, Kota Jambi, Jambi 36123'
+        ];
+        $data[] = [
+            ''
+        ];
         $data[] = [
             'No',
             'Nama Klub',
             'Nama Team',
             'Slogan Team',
             'Team Leader',
-            'Cabang Olahraga',
             'Anggota Team',
+            'Cabang Olahraga',
         ];
 
         $teamCollection = DB::table('teams')
@@ -89,6 +111,7 @@ class ExcelController extends Controller
                 'teams.team_name',
                 'teams.slogan',
                 'users.name as leader_team',
+                'users.lastname as leader_lastname',
                 'cabors.name as cabang',
                 'teams.atlet'
             )
@@ -98,17 +121,19 @@ class ExcelController extends Controller
         foreach ($teamCollection as $index => $team) {
             $atletIds = json_decode($team->atlet);
             $atletUsers = User::whereIn('id', $atletIds)->get();
-
             $atletNames = $atletUsers->pluck('name')->implode(', ');
+            $atletlastnames = $atletUsers->pluck('lastname')->implode(', ');
+            $atletFullName = $atletNames . ' ' . $atletlastnames;
+            $leaderFullName = $team->leader_team . ' ' . $team->leader_lastname;
 
             $data[] = [
                 $index + 1,
                 $team->club_name,
                 $team->team_name,
                 $team->slogan,
-                $team->leader_team,
+                $leaderFullName,
+                $atletFullName,
                 $team->cabang,
-                $atletNames
             ];
         }
 
@@ -120,7 +145,15 @@ class ExcelController extends Controller
 
     public function exportPelatih()
     {
-        $data = [];
+        $data[] = [
+            'KOMITE OLAHRAGA NASIONAL INDONESIA (KONI) PROVINSI JAMBI'
+        ];
+        $data[] = [
+            'Jl. Halim Perdana Kusuma No.40, Sungai Asam, Kec. Ps. Jambi, Kota Jambi, Jambi 36123'
+        ];
+        $data[] = [
+            ''
+        ];
         $data[] = [
             'No',
             'Nama Lengkap',

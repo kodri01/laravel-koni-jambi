@@ -87,26 +87,25 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach ($teams as $team)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $team->club_name }}</td>
                                 <td>{{ $team->team_name }}</td>
                                 <td>{{ $team->slogan }}</td>
-                                <td>{{ $team->leader_team }}</td>
+                                <td>{{ $team->leader_team }} {{ $team->leader_lastname }}</td>
                                 <td>
                                     <ul>
                                         @foreach ($team->anggota_team as $anggota)
-                                            <li>{{ $anggota->name }}</li>
+                                            <li>{{ $anggota->name }} {{ $anggota->lastname }}</li>
                                         @endforeach
                                     </ul>
                                 </td>
                                 <td>{{ $team->cabang }}</td>
                                 <td>
-                                    @if (!empty($team->file))
+                                    @if (!empty($team->file_team))
                                         <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
-                                            src="{{ asset('uploads/' . $team->file) }}" alt="Image News" />
+                                            src="{{ asset('uploads/' . $team->file_team) }}" alt="Image News" />
                                     @endif
                                 </td>
                             </tr>

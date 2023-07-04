@@ -23,6 +23,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Cabor</th>
+                            <th>Logo</th>
                             @can('games-edit')
                                 <th>Action</th>
                             @endcan
@@ -34,6 +35,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $list->game_name }}</td>
                                 <td>{{ $list->name }}</td>
+                                <td><img style="width: 50px; height: auto;" class="img-thumbnail text-center"
+                                        src="{{ asset('uploads/' . $list->logo_game) }}" alt="Logo Game" /></td>
                                 <td>
                                     @can('games-edit')
                                         <a href="{{ route('games.show', $list->id) }}" class="badge badge-primary p-2">
