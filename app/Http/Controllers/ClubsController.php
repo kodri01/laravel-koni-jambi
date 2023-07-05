@@ -37,13 +37,13 @@ class ClubsController extends Controller
             $lists = Club::orderBy('clubs.id', 'ASC')
                 ->leftJoin('cabors', 'clubs.cabang_id', '=', 'cabors.id')
                 ->select('clubs.*', 'cabors.name')
-                ->paginate(5);
+                ->paginate(20);
             return view('pages.clubs.index', compact('lists'));
         } else {
             $lists = Club::orderBy('clubs.id', 'ASC')
                 ->leftJoin('cabors', 'clubs.cabang_id', '=', 'cabors.id')
                 ->select('clubs.*', 'cabors.name')
-                ->where('cabang_id', auth()->user()->cabang_id)->paginate(5);
+                ->where('cabang_id', auth()->user()->cabang_id)->paginate(20);
             return view('pages.clubs.index', compact('lists'));
         }
 

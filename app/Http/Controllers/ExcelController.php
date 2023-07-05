@@ -102,6 +102,7 @@ class ExcelController extends Controller
             'Cabang Olahraga',
         ];
 
+
         $teamCollection = DB::table('teams')
             ->join('clubs', 'teams.club_id', 'clubs.id')
             ->join('cabors', 'clubs.cabang_id', 'cabors.id')
@@ -121,9 +122,10 @@ class ExcelController extends Controller
         foreach ($teamCollection as $index => $team) {
             $atletIds = json_decode($team->atlet);
             $atletUsers = User::whereIn('id', $atletIds)->get();
-            $atletNames = $atletUsers->pluck('name')->implode(', ');
-            $atletlastnames = $atletUsers->pluck('lastname')->implode(', ');
-            $atletFullName = $atletNames . ' ' . $atletlastnames;
+            // $atletNames = $atletUsers->pluck('name')->implode(', ');
+            $atletNames = $atletUsers->map(function ($user) {
+                return $user->name . ' ' . $user->lastname;
+            })->implode(', ');
             $leaderFullName = $team->leader_team . ' ' . $team->leader_lastname;
 
             $data[] = [
@@ -132,7 +134,7 @@ class ExcelController extends Controller
                 $team->team_name,
                 $team->slogan,
                 $leaderFullName,
-                $atletFullName,
+                $atletNames,
                 $team->cabang,
             ];
         }

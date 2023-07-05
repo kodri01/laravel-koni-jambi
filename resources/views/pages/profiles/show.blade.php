@@ -3,6 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-3">
                     <h2>Profile</h2>

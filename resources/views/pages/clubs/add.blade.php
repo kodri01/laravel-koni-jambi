@@ -19,7 +19,12 @@
                     <label for="user">Kepala Club</label>
                     <select name="user" id="user" class="form-control @error('user') is-invalid @enderror">
                         @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }} {{ $user->lastname }}</option>
+                            @foreach ($cabors as $cabor)
+                                @if ($user->cabang_id == $cabor->id)
+                                    <option value="{{ $user->id }}">{{ $user->name }} {{ $user->lastname }} -
+                                        {{ $cabor->name }}</option>
+                                @endif
+                            @endforeach
                         @endforeach
                     </select>
                     @error('user')

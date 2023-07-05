@@ -37,7 +37,7 @@
                         @foreach ($lists as $list)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $list->name }}</td>
+                                <td>{{ $list->name }} {{ $list->lastname }}</td>
                                 <td>{{ $list->email }}</td>
                                 <td>
                                     @if (!empty($list->profile_pic))

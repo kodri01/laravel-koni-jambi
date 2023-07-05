@@ -46,7 +46,7 @@
                             @foreach ($atlets as $leader)
                                 <option value="{{ $leader->id }}"
                                     {{ $leader->id == $team->leader_team ? 'selected="selected"' : '' }}>
-                                    {{ $leader->name }}</option>
+                                    {{ $leader->name }} {{ $leader->lastname }}</option>
                             @endforeach
                         </select>
                         @error('leader')
@@ -59,7 +59,8 @@
                             multiple="multiple">
                             @foreach ($atlets as $atlet)
                                 <option value="{{ $atlet->id }}"
-                                    {{ in_array($atlet->id, $atletarr) ? 'selected' : '' }}>{{ $atlet->name }}</option>
+                                    {{ in_array($atlet->id, $atletarr) ? 'selected' : '' }}>{{ $atlet->name }}
+                                    {{ $atlet->lastname }}</option>
                             @endforeach
                         </select>
                         @error('leader')

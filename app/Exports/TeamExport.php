@@ -39,7 +39,7 @@ class TeamExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
         $drawing->setName('Logo');
         $drawing->setDescription('Logo');
         $drawing->setPath(public_path('images/logo.png'));
-        $drawing->setCoordinates('B1');
+        $drawing->setCoordinates('C1');
         $drawing->setWidth(75);
         $drawing->setHeight(75);
 

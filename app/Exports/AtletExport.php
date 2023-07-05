@@ -13,8 +13,6 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-
-
 class AtletExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithDrawings, WithCustomStartCell, WithTitle
 {
     protected $data;

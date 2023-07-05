@@ -26,7 +26,7 @@ class UsersController extends Controller
         # code...
         // return dd(auth::user()->cabang_id);
         // $index = User::where('active', 99)->orderby('cabang_id', auth::user()->cabang_id)->paginate(5);
-        $index = User::where('active', 99)->orderBy('id', 'ASC')->paginate(5);
+        $index = User::where('active', 99)->orderBy('id', 'ASC')->paginate(20);
         $data = ['lists' => $index];
 
         return view('pages.user.users', $data);

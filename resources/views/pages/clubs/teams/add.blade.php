@@ -47,7 +47,7 @@
                         <label for="leader">Leader Team</label>
                         <select name="leader" id="leader" class="form-control @error('leader') is-invalid @enderror">
                             @foreach ($atlets as $leader)
-                                <option value="{{ $leader->id }}">{{ $leader->name }}</option>
+                                <option value="{{ $leader->id }}">{{ $leader->name }} {{ $leader->lastname }}</option>
                             @endforeach
                         </select>
                         @error('leader')
@@ -61,7 +61,8 @@
                                 class="form-control @error('listeam') is-invalid @enderror" multiple="multiple">
                                 <option value="">Select Atlets</option>
                                 @foreach ($atlets as $atlet)
-                                    <option value="{{ $atlet->id }}">{{ $atlet->name }}</option>
+                                    <option value="{{ $atlet->id }}">{{ $atlet->name }} {{ $atlet->lastname }}
+                                    </option>
                                 @endforeach
                             </select>
                         @endif
