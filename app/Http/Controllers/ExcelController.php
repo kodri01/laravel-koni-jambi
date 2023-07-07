@@ -53,6 +53,7 @@ class ExcelController extends Controller
             )
             ->where('users.active_atlet', 1)
             ->whereNull('atlets.deleted_at')
+            ->orderBy('name', 'asc')
             ->get();
 
         foreach ($atletCollection as $index => $atlet) {
@@ -117,6 +118,7 @@ class ExcelController extends Controller
                 'teams.atlet'
             )
             ->whereNull('teams.deleted_at')
+            ->orderBy('team_name', 'asc')
             ->get();
 
         foreach ($teamCollection as $index => $team) {
@@ -184,6 +186,7 @@ class ExcelController extends Controller
             )
             ->where('users.active', 99)
             ->whereNull('pelatih.deleted_at')
+            ->orderBy('name', 'asc')
             ->get();
 
         foreach ($pelatihCollection as $index => $pelatih) {

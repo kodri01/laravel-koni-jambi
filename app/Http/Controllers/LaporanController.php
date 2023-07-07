@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atlet;
+use App\Models\Cabor;
+use App\Models\Club;
+use App\Models\Pelatih;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,8 +27,11 @@ class LaporanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $searchQuery = $request->input('search', '');
+
         $atlet = DB::table('users')
             ->join('atlets', 'users.id', '=', 'atlets.iduser')
             ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
@@ -39,7 +46,15 @@ class LaporanController extends Controller
             )
             ->where('users.active_atlet', 1)
             ->whereNull('atlets.deleted_at')
-            ->paginate(100);
+            ->orderBy('name', 'asc');
+        if (!empty($searchQuery)) {
+            $atlet->where(function ($query) use ($searchQuery) {
+                $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%');
+            });
+        }
+
+        $atlet = $atlet->paginate(100);
 
 
         $teams = DB::table('teams')
@@ -56,6 +71,7 @@ class LaporanController extends Controller
                 'leaders.lastname as leader_lastname',
             )
             ->whereNull('teams.deleted_at')
+            ->orderBy('team_name', 'asc')
             ->paginate(100);
 
         foreach ($teams as $team) {
@@ -79,8 +95,16 @@ class LaporanController extends Controller
             )
             ->where('users.active', 99)
             ->whereNull('pelatih.deleted_at')
-            ->paginate(100);
+            ->orderBy('name', 'asc');
 
+        if (!empty($searchQuery)) {
+            $pelatih->where(function ($query) use ($searchQuery) {
+                $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%');
+            });
+        }
+
+        $pelatih = $pelatih->paginate(100);
 
         return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih'));
     }
@@ -114,9 +138,22 @@ class LaporanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function card_atlet($id)
     {
-        //
+        $atlet = Atlet::find($id);
+        $user = User::find($atlet->iduser);
+        $cabors = Cabor::get();
+        $clubs = Club::get();
+        return view('pages.laporan.card_atlet', compact('user', 'cabors', 'atlet', 'clubs'));
+    }
+
+    public function card_pelatih($id)
+    {
+        $pelatih = Pelatih::find($id);
+        $user = User::find($pelatih->user_id);
+        $cabors = Cabor::get();
+        $clubs = Club::get();
+        return view('pages.laporan.card_pelatih', compact('user', 'cabors', 'pelatih', 'clubs'));
     }
 
     /**

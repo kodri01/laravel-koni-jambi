@@ -23,9 +23,20 @@
 
             <!-- Tabel Atlet -->
             <div id="tableAtlet" class="table-responsive-xxl container-fluid">
-                <a href="{{ url('/export/atlet') }}" class="btn btn-danger mb-2 mt-3"> Export to
-                    <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
-                </a>
+                <div class="row">
+                    <div class="col">
+                        <a href="{{ url('/export/atlet') }}" class="btn btn-danger mb-2 mt-3"> Export to
+                            <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
+                        </a>
+                    </div>
+                    <div class="col">
+                        <form id="formAtlet" class="d-flex mb-2 mt-3" method="GET" action="{{ route('laporan.search') }}">
+                            <input id="searchInputAtlet" class="form-control me-2 mr-1" type="search" name="search"
+                                placeholder="Search Atlet Name" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
                 <table class="table table-hover ">
                     <thead>
                         <tr>
@@ -39,7 +50,7 @@
                             <th>Email</th>
                             <th>Clubs</th>
                             <th>Cabors</th>
-                            <th>Profil</th>
+                            <th>Cetak</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,12 +67,10 @@
                                 <td>{{ $atlet->email }}</td>
                                 <td>{{ $atlet->club_name }}</td>
                                 <td>{{ $atlet->cabang }}</td>
-                                <td>
-                                    @if (!empty($atlet->profile_pic))
-                                        <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
-                                            src="{{ asset('uploads/' . $atlet->profile_pic) }}" alt="Image News" />
-                                    @endif
-                                </td>
+
+                                <td><a href="{{ route('print.atlet', $atlet->id) }}" class="btn btn-sm btn-primary">
+                                        <x-bx-printer style="width: 20px; height:20px;" />
+                                    </a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -117,9 +126,20 @@
 
             <!-- Tabel Pelatih -->
             <div id="tablePelatih" class="table-responsive-xl container-fluid">
-                <a href="{{ url('/export/pelatih') }}" class="btn btn-danger mb-2 mt-3"> Export to
-                    <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
-                </a>
+                <div class="row">
+                    <div class="col">
+                        <a href="{{ url('/export/pelatih') }}" class="btn btn-danger mb-2 mt-3"> Export to
+                            <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
+                        </a>
+                    </div>
+                    <div class="col">
+                        <form class="d-flex mb-2 mt-3" method="GET" action="{{ route('laporan.search') }}">
+                            <input id="searchInputPelatih" class="form-control me-2 mr-1" type="search"
+                                placeholder="Search Pelatih Name" name="search_pelatih" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
 
                 <div class="table-responsive-xxl">
                     <table class="table">
@@ -135,7 +155,7 @@
                                 <th>Email</th>
                                 <th>Clubs</th>
                                 <th>Cabors</th>
-                                <th>Profil</th>
+                                <th>Cetak</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -152,12 +172,10 @@
                                     <td>{{ $pelatih->email }}</td>
                                     <td>{{ $pelatih->club_name }}</td>
                                     <td>{{ $pelatih->cabang }}</td>
-                                    <td>
-                                        @if (!empty($pelatih->profile_pic))
-                                            <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
-                                                src="{{ asset('uploads/' . $pelatih->profile_pic) }}" alt="Image News" />
-                                        @endif
-                                    </td>
+                                    <td><a href="{{ route('print.pelatih', $pelatih->id) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <x-bx-printer style="width: 20px; height:20px;" />
+                                        </a></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -167,7 +185,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         // Dapatkan elemen-elemen tombol dan tabel
         const btnAtlet = document.getElementById('btnAtlet');
         const btnTeam = document.getElementById('btnTeam');
@@ -198,6 +216,76 @@
             tableAtlet.style.display = 'none';
             tableTeam.style.display = 'none';
             tablePelatih.style.display = 'table';
+        });
+    </script> --}}
+
+    <script>
+        // Dapatkan elemen-elemen tombol dan tabel
+        const btnAtlet = document.getElementById('btnAtlet');
+        const btnTeam = document.getElementById('btnTeam');
+        const btnPelatih = document.getElementById('btnPelatih');
+        const tableAtlet = document.getElementById('tableAtlet');
+        const tableTeam = document.getElementById('tableTeam');
+        const tablePelatih = document.getElementById('tablePelatih');
+        const searchInputAtlet = document.getElementById('searchInputAtlet');
+        const searchInputPelatih = document.getElementById('searchInputPelatih');
+
+        // Sembunyikan semua tabel saat halaman pertama kali dimuat
+        tableAtlet.style.display = 'table';
+        tableTeam.style.display = 'none';
+        tablePelatih.style.display = 'none';
+
+        // Tambahkan event listener pada tombol-tombol untuk mengatur tampilan tabel
+        btnAtlet.addEventListener('click', function() {
+            tableAtlet.style.display = 'table';
+            tableTeam.style.display = 'none';
+            tablePelatih.style.display = 'none';
+        });
+
+        btnTeam.addEventListener('click', function() {
+            tableAtlet.style.display = 'none';
+            tableTeam.style.display = 'table';
+            tablePelatih.style.display = 'none';
+        });
+
+        btnPelatih.addEventListener('click', function() {
+            tableAtlet.style.display = 'none';
+            tableTeam.style.display = 'none';
+            tablePelatih.style.display = 'table';
+        });
+
+        // Tambahkan event listener pada input pencarian atlet
+        searchInputAtlet.addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const atletRows = tableAtlet.querySelectorAll('tbody tr');
+
+            atletRows.forEach(function(row) {
+                const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const lastname = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                if (name.includes(searchValue) || lastname.includes(searchValue)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Tambahkan event listener pada input pencarian pelatih
+        searchInputPelatih.addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            const pelatihRows = tablePelatih.querySelectorAll('tbody tr');
+
+            pelatihRows.forEach(function(row) {
+                const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const lastname = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                if (name.includes(searchValue) || lastname.includes(searchValue)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     </script>
 @endsection

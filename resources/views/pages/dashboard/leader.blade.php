@@ -62,10 +62,10 @@
             <div class="col-sm-6">
                 <div class="club">
                     <div class="card shadow-sm rounded">
+                        <div class="card-header">
+                            <h4>List Club</h4>
+                        </div>
                         <div class="card-body">
-                            <div class="card-header">
-                                <h4>List Club</h4>
-                            </div>
                             <ul class="list-group">
                                 @foreach ($clubb as $club)
                                     <li class="list-group-item">{{ $club->club_name }}</li>
