@@ -150,7 +150,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['permission:laporan-list|laporan-create|laporan-edit|laporan-delete']], function () {
         Route::resource('laporan', LaporanController::class);
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/laporan/search', [LaporanController::class, 'index'])->name('laporan.search');
         Route::get('/print/{id}/atlet', [LaporanController::class, 'card_atlet'])->name('print.atlet');
         Route::get('/print/{id}/pelatih', [LaporanController::class, 'card_pelatih'])->name('print.pelatih');
     });

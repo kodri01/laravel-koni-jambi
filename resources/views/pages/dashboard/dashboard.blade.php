@@ -8,7 +8,7 @@
         <div id="owl-carousel" class="owl-carousel owl-theme m-2">
             @foreach ($events as $event)
                 <div>
-                    <a href="{{ url('dasboard/event/' . $event->slug) }}" target="_blank" rel="noopener noreferrer">
+                    <a href="{{ url('dasboard/event/' . $event->slug) }}" rel="noopener noreferrer">
                         <img class="owl-lazy img-responsive mx-auto" style="width: auto; height:450px"
                             data-src="{{ url('uploads/' . $event->file) }}" alt="Image">
                     </a>
@@ -23,7 +23,7 @@
         <div id="owl-carousel-games" class=" p-2 owl-carousel owl-theme">
             @foreach ($games as $game)
                 <div>
-                    <a href="{{ url('dasboard/game/' . $game->slug) }}" target="_blank" rel="noopener noreferrer">
+                    <a href="{{ url('dasboard/game/' . $game->slug) }}" rel="noopener noreferrer">
                         <img class="owl-lazy img-responsive clopimg mx-auto" style="width: auto;"
                             data-src="{{ url('uploads/' . $game->image_game) }}" alt="Image">
                     </a>
@@ -41,8 +41,7 @@
                     <div id="owl-carousel-awards" class="p-2 owl-carousel owl-theme">
                         @foreach ($awards as $award)
                             <div>
-                                <a href="{{ url('dasboard/award/' . $award->slug) }}" target="_blank"
-                                    rel="noopener noreferrer">
+                                <a href="{{ url('dasboard/award/' . $award->slug) }}" rel="noopener noreferrer">
                                     <img class="owl-lazy img-responsive clopimg mx-auto" style="width: auto;"
                                         data-src="{{ url('uploads/' . $award->award_logo) }}" alt="Image">
                                 </a>
@@ -55,12 +54,19 @@
         @if (count($clubs) > 0)
             <div class="col-sm-6 mt-4">
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Join Club</h4>
-                    </div>
+                    @if (Auth::user()->active_atlet == 0)
+                        <div class="card-header">
+                            <h4>Join Club</h4>
+                        </div>
+                    @else
+                        <div class="card-header">
+                            <h4>My Club</h4>
+                        </div>
+                    @endif
+
                     <ul class="list-group list-group-flush">
                         @foreach ($clubs as $club)
-                            <li class="list-group-item"><a target="_blank"
+                            <li class="list-group-item"><a
                                     href="{{ url('dashboard/joinClub/' . $club->slug) }}">{{ $club->club_name }}</a>
                             </li>
                         @endforeach

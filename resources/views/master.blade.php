@@ -13,6 +13,6 @@
     <div class="container-fluid pt-4 pb-4">
         @yield('content')
     </div>
-    <footer class="w-100 p-2 mr-2 text-center footer">Esport &copy; {{ \Carbon\Carbon::now()->year }}</footer>
+    <footer class="w-100 p-2 mr-2 text-center footer">KONI Jambi &copy; {{ \Carbon\Carbon::now()->year }}</footer>
 </div>
 @include('layouts.footer')

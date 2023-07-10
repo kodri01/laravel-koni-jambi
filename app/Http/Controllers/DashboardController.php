@@ -51,10 +51,13 @@ class DashboardController extends Controller
         $games  = GamesModel::where('cabang_id', auth::user()->cabang_id)->get();
         $clubs = Club::where('cabang_id', auth::user()->cabang_id)->get();
         $teams = TeamModel::where('cabang_id', auth::user()->cabang_id)->get();
+
         if ($role->name == 'superadmin') {
             return view('pages.dashboard.leader', compact('event',  'club',  'team', 'clubb',  'teamm', 'pelatih', 'game', 'award', 'users', 'cabor', 'atlet'));
-        } else {
+        } elseif ($role->name == 'atlet') {
             return view('pages.dashboard.dashboard', compact('news', 'awards', 'events', 'games', 'clubs'));
+        } else {
+            return view('pages.dashboard.lead_dashboard', compact('clubs'));
         }
     }
 

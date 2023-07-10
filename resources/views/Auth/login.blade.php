@@ -5,7 +5,9 @@
 
     <div class="login-form form-input-login">
         <form action="{{ route('tologin') }}" method="post">
-            <div class="login-form-title">KONI Provinsi Jambi</div>
+            <div class="login-form-title">
+                <img src="{{ url('images/logo3.png') }}" alt="" srcset="" style="width: 100%; height: auto;">
+            </div>
             @csrf
             <div class="card-body">
                 @if (session('errors'))

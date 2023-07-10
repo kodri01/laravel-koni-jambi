@@ -1,11 +1,11 @@
 <div class="navigation">
-    <ul>
+    <ul class="mx my-1">
         <li>
             <a href="{{ route('dashboard') }}">
-                <span class="icon material-icons md-light">sports</span>
-                <span class="title-bar">
-                    <h2>KONI</h2>
-                </span>
+
+                <img src="{{ url('images/logo2.png') }}" alt="" srcset=""
+                    style="width: 100%; height: 60px; color:white;">
+
             </a>
         </li>
     </ul>
