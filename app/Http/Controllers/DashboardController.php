@@ -54,7 +54,7 @@ class DashboardController extends Controller
 
         if ($role->name == 'superadmin') {
             return view('pages.dashboard.leader', compact('event',  'club',  'team', 'clubb',  'teamm', 'pelatih', 'game', 'award', 'users', 'cabor', 'atlet'));
-        } elseif ($role->name == 'atlet') {
+        } elseif ($role->name == 'Atlet') {
             return view('pages.dashboard.dashboard', compact('news', 'awards', 'events', 'games', 'clubs'));
         } else {
             return view('pages.dashboard.lead_dashboard', compact('clubs'));

@@ -60,8 +60,10 @@ class PelatihExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 // Merge cell 
-                $event->sheet->mergeCells('A3:I3');
                 $event->sheet->mergeCells('A2:I2');
+                $event->sheet->mergeCells('A3:I3');
+                $event->sheet->mergeCells('A7:I7');
+                $event->sheet->mergeCells('A8:I8');
 
                 // Mengatur font size, tipe bold, dan alignment center
                 $event->sheet->getStyle('A2')->applyFromArray([
@@ -84,7 +86,43 @@ class PelatihExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                     ],
                 ]);
 
-                $event->sheet->getStyle('A5:I5')->applyFromArray([
+                $event->sheet->getStyle('C5:H5')->applyFromArray([
+                    'borders' => [
+                        'top' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                            'color' => ['argb' => '000000'],
+                        ],
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
+
+                $event->sheet->getRowDimension(5)->setRowHeight(7);
+                $event->sheet->getRowDimension(6)->setRowHeight(7);
+
+                $event->sheet->getStyle('A7:I7')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 12,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ]);
+
+                $event->sheet->getStyle('A8:I8')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 12,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ]);
+
+                $event->sheet->getStyle('A10:I10')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 12,

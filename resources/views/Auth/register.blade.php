@@ -38,7 +38,7 @@
                     <div class="form-group col-md-4">
                         <label for="no_telp">No Telpon</label>
                         <input type="text" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp"
-                            name="no_telp" value="{{ old('no_telp') }}">
+                            name="no_telp" value="{{ old('no_telp') }}" placeholder="Nomor Telpon">
                         @error('no_telp')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -46,7 +46,7 @@
                     <div class="form-group col-md-4">
                         <label for="no_ktp">No KTP</label>
                         <input type="text" class="form-control @error('no_ktp') is-invalid @enderror" id="no_ktp"
-                            name="no_ktp" value="{{ old('no_ktp') }}">
+                            name="no_ktp" value="{{ old('no_ktp') }}" placeholder="Nomor KTP">
                         @error('no_ktp')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -54,7 +54,7 @@
                     <div class="form-group col-md-4">
                         <label for="no_kk">No KK</label>
                         <input type="text" class="form-control @error('no_kk') is-invalid @enderror" id="no_kk"
-                            name="no_kk" value="{{ old('no_kk') }}">
+                            name="no_kk" value="{{ old('no_kk') }}" placeholder="Nomor Kartu Keluarga">
                         @error('no_kk')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

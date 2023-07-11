@@ -24,8 +24,8 @@
                     <tbody>
                         @foreach ($lists as $list)
                             <tr>
-                                <td>{{ $list->id }}</td>
-                                <td>{{ $list->name }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $list->name }} {{ $list->lastname }}</td>
                                 <td>{{ $list->email }}</td>
                                 <td>
                                     <div class="d-flex">

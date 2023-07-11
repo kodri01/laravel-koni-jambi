@@ -52,7 +52,7 @@ class AtletExport implements FromCollection, WithHeadings, ShouldAutoSize, WithE
 
     public function startCell(): string
     {
-        return 'A2'; // Mulai dari sel A5
+        return 'A2'; // Mulai dari sel A2
     }
 
     public function registerEvents(): array
@@ -60,8 +60,10 @@ class AtletExport implements FromCollection, WithHeadings, ShouldAutoSize, WithE
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 // Merge cell dari A1 sampai I1
-                $event->sheet->mergeCells('A3:I3');
                 $event->sheet->mergeCells('A2:I2');
+                $event->sheet->mergeCells('A3:I3');
+                $event->sheet->mergeCells('A7:I7');
+                $event->sheet->mergeCells('A8:I8');
 
                 // Mengatur font size, tipe bold, dan alignment center untuk kalimat "Laporan Data Atlet KONI Provinsi Jambi Tahun 2023"
                 $event->sheet->getStyle('A2')->applyFromArray([
@@ -84,10 +86,58 @@ class AtletExport implements FromCollection, WithHeadings, ShouldAutoSize, WithE
                     ],
                 ]);
 
-                $event->sheet->getStyle('A5:I5')->applyFromArray([
+                $event->sheet->getStyle('C5:H5')->applyFromArray([
+                    'borders' => [
+                        'top' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                            'color' => ['argb' => '000000'],
+                        ],
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
+
+
+                // Mengatur tinggi baris agar garis berdempetan
+                $event->sheet->getRowDimension(5)->setRowHeight(7);
+                $event->sheet->getRowDimension(6)->setRowHeight(7);
+
+                $event->sheet->getStyle('A7:I7')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 12,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ]);
+
+                $event->sheet->getStyle('A8:I8')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 12,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ]);
+
+                $event->sheet->getStyle('A10:I10')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 12,
+                    ],
+                ]);
+
+                $highestRow = $event->sheet->getHighestRow();
+                $event->sheet->getStyle('A10:I' . $highestRow)->applyFromArray([
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
+                        ],
                     ],
                 ]);
             },

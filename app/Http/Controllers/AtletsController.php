@@ -342,7 +342,7 @@ class AtletsController extends Controller
         $requestatlets = RequestAtlets::find($id);
         $user_id = $requestatlets->user_id;
 
-        Atlet::create([
+        Atlet::updated([
             'iduser' => $user_id,
             'club_id' => $club_id,
         ]);
@@ -355,7 +355,7 @@ class AtletsController extends Controller
 
         $requestatlets->update(['approve' => 1]);
 
-        return redirect()->to('clubs/' . $club_id . '/atlets/request')
+        return redirect()->to('clubs/' . $club_id . '/atlets')
             ->with('success', 'Approve atlet request successfully');
     }
 

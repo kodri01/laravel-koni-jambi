@@ -50,7 +50,8 @@ class LaporanController extends Controller
         if (!empty($searchQuery)) {
             $atlet->where(function ($query) use ($searchQuery) {
                 $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
-                    ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%');
+                    ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('cabors.name', 'LIKE', '%' . $searchQuery . '%');
             });
         }
 

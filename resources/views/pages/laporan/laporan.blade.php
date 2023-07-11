@@ -1,12 +1,12 @@
 @extends('master')
 @section('title', '- Laporan')
 @section('content')
-    <div class="">
+    <div>
         <div class="bg-white rounded p-3 mb-3">
             <h2 class="color-title mt-1 mb-1">Laporan KONI</h2>
         </div>
         <div class="wrapper-table bg-white rounded">
-            <div class="w-100 ml-3">
+            <div class="w-100 ml-3 ">
                 <div class="row">
                     <div class="col-sm-1 mt-3">
                         <a href="#tableAtlet" id="btnAtlet" class="btn btn-primary">Data Atlet</a>
@@ -29,6 +29,7 @@
                             <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
                         </a>
                     </div>
+
                     <div class="col">
                         <form id="formAtlet" class="d-flex mb-2 mt-3" method="GET" action="">
                             <div class="input-group">
@@ -44,17 +45,17 @@
                         </form>
                     </div>
                 </div>
-                <table class="table table-hover ">
+                <table class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama lengkap</th>
                             <th>Tanggal Lahir</th>
                             <th>Nomor Telepon</th>
-                            <th>Nomor KK</th>
                             <th>Nomor KTP</th>
                             <th>Alamat</th>
                             <th>Email</th>
+                            <th>Tahun</th>
                             <th>Clubs</th>
                             <th>Cabors</th>
                             <th>Cetak</th>
@@ -68,10 +69,10 @@
                                 <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->tgl_lahir)->format('d M Y') }}
                                 </td>
                                 <td>{{ $atlet->no_telp }}</td>
-                                <td>{{ $atlet->no_kk }}</td>
                                 <td>{{ $atlet->no_ktp }}</td>
                                 <td class="text-capitalize">{{ $atlet->address }}</td>
                                 <td>{{ $atlet->email }}</td>
+                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->created_at)->format('Y') }}
                                 <td>{{ $atlet->club_name }}</td>
                                 <td>{{ $atlet->cabang }}</td>
 
@@ -145,10 +146,6 @@
                     </div>
                     <div class="col">
                         <form class="d-flex mb-2 mt-3" method="GET" action="#">
-                            {{-- <input id="searchInputPelatih" class="form-control me-2 mr-1" type="search"
-                                placeholder="Search Nama Pelatih" name="search_pelatih" aria-label="Search">
-                            <x-eos-person-search style="width: 20px; height:20px;" /> --}}
-
                             <div class="input-group">
 
                                 <div class="input-group-append">
@@ -164,17 +161,17 @@
                 </div>
 
                 <div class="table-responsive-xxl">
-                    <table class="table">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Nama lengkap</th>
                                 <th>Tanggal Lahir</th>
                                 <th>Nomor Telepon</th>
-                                <th>Nomor KK</th>
                                 <th>Nomor KTP</th>
                                 <th>Alamat</th>
                                 <th>Email</th>
+                                <th>Tahun</th>
                                 <th>Clubs</th>
                                 <th>Cabors</th>
                                 <th>Cetak</th>
@@ -188,10 +185,10 @@
                                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tgl_lahir)->format('d M Y') }}
                                     </td>
                                     <td>{{ $pelatih->no_telp }}</td>
-                                    <td>{{ $pelatih->no_kk }}</td>
                                     <td>{{ $pelatih->no_ktp }}</td>
                                     <td class="text-capitalize">{{ $pelatih->address }}</td>
                                     <td>{{ $pelatih->email }}</td>
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->created_at)->format('Y') }}
                                     <td>{{ $pelatih->club_name }}</td>
                                     <td>{{ $pelatih->cabang }}</td>
                                     <td><a href="{{ route('print.pelatih', $pelatih->id) }}" class="btn btn-sm btn-primary"
@@ -256,8 +253,10 @@
             atletRows.forEach(function(row) {
                 const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
                 const lastname = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const cabors = row.querySelector('td:nth-child(10)').textContent.toLowerCase();
 
-                if (name.includes(searchValue) || lastname.includes(searchValue)) {
+                if (name.includes(searchValue) || lastname.includes(searchValue) || cabors.includes(
+                        searchValue)) {
                     row.style.display = 'table-row';
                     isDataFound = true; // Set isDataFound menjadi true jika ada data yang cocok
                 } else {
@@ -284,8 +283,11 @@
             pelatihRows.forEach(function(row) {
                 const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
                 const lastname = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const cabors = row.querySelector('td:nth-child(10)').textContent.toLowerCase();
 
-                if (name.includes(searchValue) || lastname.includes(searchValue)) {
+
+                if (name.includes(searchValue) || lastname.includes(searchValue) || cabors.includes(
+                        searchValue)) {
                     row.style.display = 'table-row';
                     isDataFound = true; // Set isDataFound menjadi true jika ada data yang cocok
                 } else {

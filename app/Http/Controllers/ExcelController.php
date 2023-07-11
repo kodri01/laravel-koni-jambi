@@ -25,6 +25,21 @@ class ExcelController extends Controller
             ''
         ];
         $data[] = [
+            ''
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
+            'LAPORAN ATLET CABANG OLAHRAGA KONI PROVINSI JAMBI'
+        ];
+        $data[] = [
+            'TAHUN 2023'
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
             'No',
             'Nama Lengkap',
             'Tanggal Lahir',
@@ -94,6 +109,21 @@ class ExcelController extends Controller
             ''
         ];
         $data[] = [
+            ''
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
+            'LAPORAN TEAM CABANG OLAHRAGA KONI PROVINSI JAMBI'
+        ];
+        $data[] = [
+            'TAHUN 2023'
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
             'No',
             'Nama Klub',
             'Nama Team',
@@ -154,6 +184,21 @@ class ExcelController extends Controller
         ];
         $data[] = [
             'Jl. Halim Perdana Kusuma No.40, Sungai Asam, Kec. Ps. Jambi, Kota Jambi, Jambi 36123'
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
+            ''
+        ];
+        $data[] = [
+            'LAPORAN PELATIH CABANG OLAHRAGA KONI PROVINSI JAMBI'
+        ];
+        $data[] = [
+            'TAHUN 2023'
         ];
         $data[] = [
             ''

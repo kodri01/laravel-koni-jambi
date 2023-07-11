@@ -61,8 +61,10 @@ class TeamExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 // Merge cell dari A1 sampai I1
-                $event->sheet->mergeCells('A3:G3');
                 $event->sheet->mergeCells('A2:G2');
+                $event->sheet->mergeCells('A3:G3');
+                $event->sheet->mergeCells('A7:G7');
+                $event->sheet->mergeCells('A8:G8');
 
                 // Mengatur font size, tipe bold, dan alignment center untuk kalimat "Laporan Data Atlet KONI Provinsi Jambi Tahun 2023"
                 $event->sheet->getStyle('A2')->applyFromArray([
@@ -85,7 +87,45 @@ class TeamExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
                     ],
                 ]);
 
-                $event->sheet->getStyle('A5:G5')->applyFromArray([
+                $event->sheet->getStyle('C5:F5')->applyFromArray([
+                    'borders' => [
+                        'top' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                            'color' => ['argb' => '000000'],
+                        ],
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
+
+
+                // Mengatur tinggi baris agar garis berdempetan
+                $event->sheet->getRowDimension(5)->setRowHeight(7);
+                $event->sheet->getRowDimension(6)->setRowHeight(7);
+
+                $event->sheet->getStyle('A7:I7')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 12,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ]);
+
+                $event->sheet->getStyle('A8:I8')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 12,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ]);
+
+                $event->sheet->getStyle('A10:G10')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 12,
