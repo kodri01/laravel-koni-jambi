@@ -107,7 +107,15 @@ class LaporanController extends Controller
 
         $pelatih = $pelatih->paginate(100);
 
-        return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih'));
+        $tahunAtlet = Atlet::select(DB::raw('YEAR(created_at) as year'))
+            ->distinct()
+            ->pluck('year');
+
+        $tahunPelatih = Pelatih::select(DB::raw('YEAR(created_at) as year'))
+            ->distinct()
+            ->pluck('year');
+
+        return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih', 'tahunAtlet', 'tahunPelatih'));
     }
 
 
