@@ -102,10 +102,10 @@ class TeamExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
 
 
                 // Mengatur tinggi baris agar garis berdempetan
-                $event->sheet->getRowDimension(5)->setRowHeight(7);
+                $event->sheet->getRowDimension(5)->setRowHeight(3);
                 $event->sheet->getRowDimension(6)->setRowHeight(7);
 
-                $event->sheet->getStyle('A7:I7')->applyFromArray([
+                $event->sheet->getStyle('A7:G7')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 12,
@@ -115,7 +115,7 @@ class TeamExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
                     ],
                 ]);
 
-                $event->sheet->getStyle('A8:I8')->applyFromArray([
+                $event->sheet->getStyle('A8:G8')->applyFromArray([
                     'font' => [
                         'bold' => true,
                         'size' => 12,
@@ -131,6 +131,25 @@ class TeamExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
                         'size' => 12,
                     ],
                 ]);
+
+                $highestRow = $event->sheet->getHighestRow();
+                $highestColumn = $event->sheet->getHighestColumn();
+                $range = 'A10:' . $highestColumn . $highestRow;
+                $event->sheet->getStyle($range)->applyFromArray([
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
+
+                // Menambahkan informasi penanggung jawab
+                $penanggungJawab = "Jambi, " . date('d F Y') . "\nKetua Umum\n\n\n\nBudi Setiawan,S.P.,M.M.";
+                $event->sheet->setCellValue('G' . ($event->sheet->getHighestRow() + 3), $penanggungJawab);
+                $event->sheet->getStyle('G' . ($event->sheet->getHighestRow()))->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle('G' . ($event->sheet->getHighestRow()))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getRowDimension($event->sheet->getHighestRow())->setRowHeight(86);
             },
         ];
     }

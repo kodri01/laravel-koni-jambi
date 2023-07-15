@@ -99,7 +99,7 @@ class PelatihExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                     ],
                 ]);
 
-                $event->sheet->getRowDimension(5)->setRowHeight(7);
+                $event->sheet->getRowDimension(5)->setRowHeight(3);
                 $event->sheet->getRowDimension(6)->setRowHeight(7);
 
                 $event->sheet->getStyle('A7:I7')->applyFromArray([
@@ -128,6 +128,25 @@ class PelatihExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
                         'size' => 12,
                     ],
                 ]);
+
+                $highestRow = $event->sheet->getHighestRow();
+                $highestColumn = $event->sheet->getHighestColumn();
+                $range = 'A10:' . $highestColumn . $highestRow;
+                $event->sheet->getStyle($range)->applyFromArray([
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
+
+                // Menambahkan informasi penanggung jawab
+                $penanggungJawab = "Jambi, " . date('d F Y') . "\nKetua Umum\n\n\n\nBudi Setiawan,S.P.,M.M.";
+                $event->sheet->setCellValue('I' . ($event->sheet->getHighestRow() + 3), $penanggungJawab);
+                $event->sheet->getStyle('I' . ($event->sheet->getHighestRow()))->getAlignment()->setWrapText(true);
+                $event->sheet->getStyle('I' . ($event->sheet->getHighestRow()))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $event->sheet->getRowDimension($event->sheet->getHighestRow())->setRowHeight(86);
             },
         ];
     }

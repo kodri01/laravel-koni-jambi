@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 
-
+use function PHPUnit\Framework\at;
 
 class LaporanController extends Controller
 {
@@ -42,7 +42,8 @@ class LaporanController extends Controller
                 'users.name as atlet_name',
                 'clubs.club_name',
                 'atlets.id as atlet_id',
-                'cabors.name as cabang'
+                'cabors.name as cabang',
+                'atlets.created_at as tahun'
             )
             ->where('users.active_atlet', 1)
             ->whereNull('atlets.deleted_at')
@@ -92,7 +93,8 @@ class LaporanController extends Controller
                 'users.name as pelatih_name',
                 'clubs.club_name',
                 'pelatih.id as pelatih_id',
-                'cabors.name as cabang'
+                'cabors.name as cabang',
+                'pelatih.created_at as tahun'
             )
             ->where('users.active', 99)
             ->whereNull('pelatih.deleted_at')
@@ -109,11 +111,15 @@ class LaporanController extends Controller
 
         $tahunAtlet = Atlet::select(DB::raw('YEAR(created_at) as year'))
             ->distinct()
-            ->pluck('year');
+            ->pluck('year')
+            ->sort()
+            ->toArray();
 
         $tahunPelatih = Pelatih::select(DB::raw('YEAR(created_at) as year'))
             ->distinct()
-            ->pluck('year');
+            ->pluck('year')
+            ->sort()
+            ->toArray();
 
         return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih', 'tahunAtlet', 'tahunPelatih'));
     }

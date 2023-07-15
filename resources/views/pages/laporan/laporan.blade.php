@@ -25,7 +25,7 @@
             <div id="tableAtlet" class="table-responsive-xxl container-fluid">
                 <div class="row">
                     <div class="col">
-                        <a href="{{ url('/export/atlet') }}" class="btn btn-danger">Export to
+                        <a id="exportAtletButton" href="{{ url('/export/atlet') }}?tahun=" class="btn btn-danger">Export to
                             <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
                         </a>
                     </div>
@@ -78,13 +78,13 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="text-capitalize">{{ $atlet->name }} {{ $atlet->lastname }}</td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->tgl_lahir)->format('d M Y') }}
+                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->tgl_lahir)->format('d F Y') }}
                                 </td>
                                 <td>{{ $atlet->no_telp }}</td>
                                 <td>{{ $atlet->no_ktp }}</td>
                                 <td class="text-capitalize">{{ $atlet->address }}</td>
                                 <td>{{ $atlet->email }}</td>
-                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->created_at)->format('Y') }}
+                                <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $atlet->tahun)->format('Y') }}
                                 </td>
                                 <td>{{ $atlet->club_name }}</td>
                                 <td>{{ $atlet->cabang }}</td>
@@ -153,7 +153,8 @@
             <div id="tablePelatih" class="table-responsive-xl container-fluid">
                 <div class="row">
                     <div class="col">
-                        <a href="{{ url('/export/pelatih') }}" class="btn btn-danger"> Export to
+                        <a id="exportPelatihButton" href="{{ url('/export/pelatih') }}?tahun=" class="btn btn-danger">
+                            Export to
                             <x-fileicon-microsoft-excel style="width: 20px; height:20px;" />
                         </a>
                     </div>
@@ -209,13 +210,13 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td class="text-capitalize">{{ $pelatih->name }} {{ $pelatih->lastname }}</td>
-                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tgl_lahir)->format('d M Y') }}
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tgl_lahir)->format('d F Y') }}
                                     </td>
                                     <td>{{ $pelatih->no_telp }}</td>
                                     <td>{{ $pelatih->no_ktp }}</td>
                                     <td class="text-capitalize">{{ $pelatih->address }}</td>
                                     <td>{{ $pelatih->email }}</td>
-                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->created_at)->format('Y') }}
+                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $pelatih->tahun)->format('Y') }}
                                     <td>{{ $pelatih->club_name }}</td>
                                     <td>{{ $pelatih->cabang }}</td>
                                     <td><a href="{{ route('print.pelatih', $pelatih->id) }}"
@@ -362,7 +363,7 @@
             var visibleRows = document.querySelectorAll("#tableAtlet tbody tr[style='display: table-row;']");
 
             if (selectedYear !== "" && visibleRows.length === 0) {
-                noDataMessage.style.display = "block";
+                noDataMessage.style.display = "none";
             } else {
                 noDataMessage.style.display = "none";
             }
@@ -370,6 +371,12 @@
 
         // Event listener untuk memanggil fungsi filterDataAtletByYear() saat memilih opsi tahun pada tabel atlet
         document.getElementById("tahunAtlet").addEventListener("change", filterDataAtletByYear);
+        document.getElementById("tahunAtlet").addEventListener("change", function() {
+            var selectedYear = this.value;
+            var exportButton = document.getElementById("exportAtletButton");
+            var url = "{{ url('/export/atlet') }}?tahun=" + selectedYear;
+            exportButton.setAttribute("href", url);
+        });
 
 
         // Fungsi untuk melakukan filtering pada tabel pelatih
@@ -400,7 +407,7 @@
             var visibleRows = document.querySelectorAll("#tablePelatih tbody tr[style='display: table-row;']");
 
             if (selectedYear !== "" && visibleRows.length === 0) {
-                noDataMessage.style.display = "block";
+                noDataMessage.style.display = "none";
             } else {
                 noDataMessage.style.display = "none";
             }
@@ -408,5 +415,11 @@
 
         // Event listener untuk memanggil fungsi filterDataPelatihByYear() saat memilih opsi tahun pada tabel pelatih
         document.getElementById("tahunPelatih").addEventListener("change", filterDataPelatihByYear);
+        document.getElementById("tahunPelatih").addEventListener("change", function() {
+            var selectedYear = this.value;
+            var exportButton = document.getElementById("exportPelatihButton");
+            var url = "{{ url('/export/pelatih') }}?tahun=" + selectedYear;
+            exportButton.setAttribute("href", url);
+        });
     </script>
 @endsection

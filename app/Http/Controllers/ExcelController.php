@@ -13,8 +13,10 @@ use Maatwebsite\Excel\Facades\Excel;
 class ExcelController extends Controller
 {
 
-    public function exportAtlet()
+    public function exportAtlet(Request $request)
     {
+        $tahunFilter = $request->input('tahun');
+
         $data[] = [
             'KOMITE OLAHRAGA NASIONAL INDONESIA (KONI) PROVINSI JAMBI'
         ];
@@ -34,7 +36,7 @@ class ExcelController extends Controller
             'LAPORAN ATLET CABANG OLAHRAGA KONI PROVINSI JAMBI'
         ];
         $data[] = [
-            'TAHUN 2023'
+            ($tahunFilter ? 'TAHUN ' . $tahunFilter : 'SEMUA TAHUN')
         ];
         $data[] = [
             ''
@@ -44,7 +46,7 @@ class ExcelController extends Controller
             'Nama Lengkap',
             'Tanggal Lahir',
             'Nomor Telepon',
-            'Nomor KK',
+            'Tahun',
             'Nomor KTP',
             'Alamat',
             'Email',
@@ -60,34 +62,36 @@ class ExcelController extends Controller
                 'users.lastname',
                 'users.tgl_lahir',
                 'users.no_telp',
-                'users.no_kk',
                 'users.no_ktp',
                 'users.address',
                 'users.email',
-                'cabors.name as cabang'
+                'cabors.name as cabang',
+                'atlets.created_at as tahun_atlet',
             )
             ->where('users.active_atlet', 1)
             ->whereNull('atlets.deleted_at')
+            ->when($tahunFilter, function ($query) use ($tahunFilter) {
+                return $query->whereYear('atlets.created_at', $tahunFilter);
+            })
             ->orderBy('name', 'asc')
             ->get();
 
         foreach ($atletCollection as $index => $atlet) {
             $tglLahir = Carbon::parse($atlet->tgl_lahir)->format('d M Y');
+            $tahun = Carbon::parse($atlet->tahun_atlet)->format('Y');
             $atletFullName = $atlet->name . ' ' . $atlet->lastname;
             $data[] = [
                 $index + 1, // Menambahkan nomor urut pada setiap baris
                 $atletFullName,
                 $tglLahir,
                 $atlet->no_telp,
-                $atlet->no_kk,
+                $tahun,
                 $atlet->no_ktp,
                 $atlet->address,
                 $atlet->email,
                 $atlet->cabang,
             ];
         }
-
-        // array_unshift($data, ['Laporan Data Atlet KONI Provinsi Jambi Tahun 2023']);
 
         $dateTime = date('Ymd_His');
         $fileName = 'data_atlet_' . $dateTime . '.xlsx';
@@ -177,8 +181,10 @@ class ExcelController extends Controller
         return Excel::download(new \App\Exports\TeamExport($data), $fileName);
     }
 
-    public function exportPelatih()
+    public function exportPelatih(Request $request)
     {
+        $tahunFilter = $request->input('tahun');
+
         $data[] = [
             'KOMITE OLAHRAGA NASIONAL INDONESIA (KONI) PROVINSI JAMBI'
         ];
@@ -198,7 +204,7 @@ class ExcelController extends Controller
             'LAPORAN PELATIH CABANG OLAHRAGA KONI PROVINSI JAMBI'
         ];
         $data[] = [
-            'TAHUN 2023'
+            ($tahunFilter ? 'TAHUN ' . $tahunFilter : 'SEMUA TAHUN')
         ];
         $data[] = [
             ''
@@ -208,7 +214,7 @@ class ExcelController extends Controller
             'Nama Lengkap',
             'Tanggal Lahir',
             'Nomor Telepon',
-            'Nomor KK',
+            'Tahun',
             'Nomor KTP',
             'Alamat',
             'Email',
@@ -227,15 +233,20 @@ class ExcelController extends Controller
                 'users.no_ktp',
                 'users.address',
                 'users.email',
+                'pelatih.created_at as tahun_pelatih',
                 'cabors.name as cabang'
             )
             ->where('users.active', 99)
             ->whereNull('pelatih.deleted_at')
+            ->when($tahunFilter, function ($query) use ($tahunFilter) {
+                return $query->whereYear('pelatih.created_at', $tahunFilter);
+            })
             ->orderBy('name', 'asc')
             ->get();
 
         foreach ($pelatihCollection as $index => $pelatih) {
             $tglLahir = Carbon::parse($pelatih->tgl_lahir)->format('d M Y');
+            $tahun = Carbon::parse($pelatih->tahun_pelatih)->format('Y');
             $pelatihFullName = $pelatih->name . ' ' . $pelatih->lastname;
 
             $data[] = [
@@ -243,7 +254,7 @@ class ExcelController extends Controller
                 $pelatihFullName,
                 $tglLahir,
                 $pelatih->no_telp,
-                $pelatih->no_kk,
+                $tahun,
                 $pelatih->no_ktp,
                 $pelatih->address,
                 $pelatih->email,
