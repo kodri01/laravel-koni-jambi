@@ -2,40 +2,47 @@
 @section('title', '- Dasboards')
 @section('content')
     <div class="row mb-3 p-2 align-content-between">
-        <div class="col ml-2 container rounded" style="height: 130px; background-color:#de3230; color:white">
-            <h4 class="mt-3">Total Cabor</h4>
+        <a href="{{ route('cabors.index') }}" class="btn col ml-2 container rounded"
+            style="height: 130px; background-color:#de3230; color:white">
+            <h4 class="mt-2 text-left">Total Cabor</h4>
             <h1 class="text-center">{{ $cabor }}</h1>
-        </div>
-        <div class="col ml-2 mr-2 container rounded" style="background-color:#f0cc04; color:white">
-            <h4 class="mt-3">Total Atlet</h4>
+        </a>
+        <a href="{{ route('laporan.index') }}" class="btn col ml-2 mr-2 container rounded"
+            style="background-color:#f0cc04; color:white">
+            <h4 class="mt-2 text-left">Total Atlet</h4>
             <h1 class="text-center">{{ $atlet }}</h1>
-        </div>
-        <div class="col container rounded" style="background-color:#41c5b8; color:white">
-            <h4 class="mt-3">Total Pelatih</h4>
+        </a>
+        <a href="{{ route('laporan.index') }}" class="btn col container rounded"
+            style="background-color:#41c5b8; color:white">
+            <h4 class="mt-2 text-left">Total Pelatih</h4>
             <h1 class="text-center">{{ $pelatih }}</h1>
-        </div>
-        <div class="col ml-2 mr-2 container rounded" style="background-color:#0174aa; color:white">
-            <h4 class="mt-3">Total Club</h4>
+        </a>
+        <a href="{{ route('clubs.index') }}" class="btn col ml-2 mr-2 container rounded"
+            style="background-color:#0174aa; color:white">
+            <h4 class="mt-2 text-left">Total Club</h4>
             <h1 class="text-center">{{ $club }}</h1>
-        </div>
+        </a>
     </div>
     <div class="row mb-4 p-2 align-content-between">
-        <div class="col ml-2 container rounded" style="height: 130px;background-color:#0174aa; color:white">
-            <h4 class="mt-3">Total Team</h4>
+        <a href="{{ route('laporan.index') }}" class="btn col ml-2 container rounded"
+            style="height: 130px;background-color:#0174aa; color:white">
+            <h4 class="mt-2 text-left">Total Team</h4>
             <h1 class="text-center">{{ $team }}</h1>
-        </div>
-        <div class="col ml-2 mr-2 container rounded " style="background-color:#41c5b8; color:white">
-            <h4 class="mt-3">Total Award</h4>
+        </a>
+        <a href="{{ route('awards.index') }}" class="btn col ml-2 mr-2 container rounded "
+            style="background-color:#41c5b8; color:white">
+            <h4 class="mt-2 text-left">Total Award</h4>
             <h1 class="text-center">{{ $award }}</h1>
-        </div>
-        <div class="col container rounded" style="background-color:#f0cc04; color:white">
-            <h4 class="mt-3">Total Game</h4>
+        </a>
+        <a href="{{ route('games') }}" class="btn col container rounded" style="background-color:#f0cc04; color:white">
+            <h4 class="mt-2 text-left">Total Game</h4>
             <h1 class="text-center">{{ $game }}</h1>
-        </div>
-        <div class="col ml-2 mr-2 container rounded" style="background-color:#de3230; color:white">
-            <h4 class="mt-3">Total Event</h4>
+        </a>
+        <a href="{{ route('events.index') }}" class="btn col ml-2 mr-2 container rounded"
+            style="background-color:#de3230; color:white">
+            <h4 class="mt-2 text-left">Total Event</h4>
             <h1 class="text-center">{{ $event }}</h1>
-        </div>
+        </a>
     </div>
 
 

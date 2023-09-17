@@ -30,13 +30,13 @@ class GamesController extends Controller
             $games = GamesModel::orderBy('games.id', 'ASC')
                 ->leftJoin('cabors', 'games.cabang_id', '=', 'cabors.id')
                 ->select('games.*', 'cabors.name')
-                ->paginate(5);
+                ->paginate(30);
             return view('pages.games.index', compact('games'));
         } else {
             $games = GamesModel::orderBy('games.id', 'ASC')
                 ->leftJoin('cabors', 'games.cabang_id', '=', 'cabors.id')
                 ->select('games.*', 'cabors.name')
-                ->where('cabang_id', auth::user()->cabang_id)->paginate(5);
+                ->where('cabang_id', auth::user()->cabang_id)->paginate(30);
             return view('pages.games.index', compact('games'));
         }
     }

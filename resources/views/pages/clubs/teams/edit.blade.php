@@ -93,17 +93,17 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    @if (!empty($team->file))
-                        <div class="form-group col-md-4">
-                            <div class="show-image d-inline-block" id="show-image" style="width: 150px; height: auto;">
-                                <img src='{{ url("uploads/$team->file") }}' class="img-fluid img-thumbnail" />
-                            </div>
-                        </div>
-                    @endif
                     @if (!empty($team->cover))
                         <div class="form-group col-md-4">
                             <div class="show-image d-inline-block" id="show-image" style="width: 150px; height: auto;">
                                 <img src='{{ url("uploads/$team->cover") }}' class="img-fluid img-thumbnail" />
+                            </div>
+                        </div>
+                    @endif
+                    @if (!empty($team->file))
+                        <div class="form-group col-md-4">
+                            <div class="show-image d-inline-block" id="show-image" style="width: 150px; height: auto;">
+                                <img src='{{ url("uploads/$team->file") }}' class="img-fluid img-thumbnail" />
                             </div>
                         </div>
                     @endif

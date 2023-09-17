@@ -8,5 +8,8 @@
     <title>Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" href="{{ url('images/logo.png') }}">
+
 </head>
+
 <body>

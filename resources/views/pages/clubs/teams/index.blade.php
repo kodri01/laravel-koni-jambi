@@ -27,6 +27,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach ($teams as $list)
                             <tr>

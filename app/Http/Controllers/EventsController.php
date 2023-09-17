@@ -35,13 +35,13 @@ class EventsController extends Controller
             $lists = EventsModel::orderBy('id', 'ASC')
                 ->leftjoin('cabors', 'events.cabang_id', '=', 'cabors.id')
                 ->select('events.*', 'cabors.name')
-                ->paginate(5);
+                ->paginate(20);
             return view('pages.events.index', compact('lists'));
         } else {
             $lists = EventsModel::where('cabang_id', auth::user()->cabang_id)
                 ->leftjoin('cabors', 'events.cabang_id', '=', 'cabors.id')
                 ->select('events.*', 'cabors.name')
-                ->paginate(5);
+                ->paginate(20);
             return view('pages.events.index', compact('lists'));
         }
     }

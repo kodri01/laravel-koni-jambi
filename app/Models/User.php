@@ -27,7 +27,6 @@ class User extends Authenticatable
         'no_telp',
         'no_kk',
         'no_ktp',
-        'domisili',
         'profile_ktp',
         'profile_pic',
         'email',

@@ -11,7 +11,7 @@
                             <div class="row no-gutters">
                                 <div class="col-md-5">
                                     <img src="{{ asset('uploads/' . $club->club_file) }}" class="card-img-top img-thumnail"
-                                        style="height: 250px;" alt="...">
+                                        style="width:auto; height: 250px;" alt="...">
                                 </div>
                                 <div class="col-md-7">
                                     <div class="card-body">
@@ -33,7 +33,6 @@
                     </div>
                 @endforeach
             </div>
-
             <div class="sublist mt-4">
                 <h4 class="">Informasi Team</h4>
                 <div class="row justify-content-center">
@@ -82,7 +81,7 @@
                                 <div class="row justify-content-center">
                                     @foreach ($users as $user)
                                         @if ($club->leader_team == $user->id)
-                                            <div class="col-sm-6 col-md-4 col-lg-3">
+                                            <div class="col-sm-6 col-md-4 col-lg-3 my-2">
                                                 <div class="card p-2" style="background-color: rgb(248, 248, 242)">
                                                     <div class="text-center">
                                                         <h5 class="badge badge-danger w-50">Leader Team</h5>
@@ -111,8 +110,8 @@
                                         @foreach ($de as $atlet)
                                             @foreach ($users as $user)
                                                 @if ($atlet == $user->id)
-                                                    <div class="col-sm-6 col-md-4 col-lg-3">
-                                                        <div class="card p-2"
+                                                    <div class="col-sm-6 col-md-4 col-lg-3 my-2">
+                                                        <div class="card  p-2"
                                                             style="background-color: rgb(248, 248, 242)">
                                                             <div class="text-center">
                                                                 <h5 class="badge badge-success w-50">Anggota Team

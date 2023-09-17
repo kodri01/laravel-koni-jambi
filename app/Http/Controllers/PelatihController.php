@@ -122,6 +122,7 @@ class PelatihController extends Controller
             'lastname.required'  => 'Lastname wajib diisi',
             'lastname.min'       => 'Lastname minimal 3 karakter',
             'email.required' => 'Email wajib diisi',
+            'email.unique'      => 'Email Sudah Terdaftar, Coba Email yang Lain',
             'pass.required'  => 'Password wajib diisi',
             'pass.min'       => 'Password minimal 3 karakter',
             'file.required'  => 'Foto profile wajib diupload',

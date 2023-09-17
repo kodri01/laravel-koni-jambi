@@ -52,7 +52,7 @@
                                     </span>
                                 </div>
                                 <input id="searchInputAtlet" class="form-control me-2 mr-1" type="search" name="search"
-                                    placeholder="Search Nama Atlet" aria-label="Search">
+                                    placeholder="Search Nama Atlet atau Cabang Olahraga" aria-label="Search">
                             </div>
                         </form>
                     </div>
@@ -182,7 +182,8 @@
                                     </span>
                                 </div>
                                 <input id="searchInputPelatih" class="form-control me-2 mr-1" type="search"
-                                    placeholder="Search Nama Pelatih" name="search_pelatih" aria-label="Search">
+                                    placeholder="Search Nama Pelatih atau Cabang Olahraga" name="search_pelatih"
+                                    aria-label="Search">
                             </div>
                         </form>
                     </div>

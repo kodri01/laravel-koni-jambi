@@ -30,7 +30,7 @@
                         @foreach ($lists as $users)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $users->name }}</td>
+                                <td>{{ $users->name }} {{ $users->lastname }}</td>
                                 <td>{{ $users->email }}</td>
                                 <td>
                                     @can('admins-edit')

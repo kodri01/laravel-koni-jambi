@@ -69,7 +69,7 @@
             </li>
         </ul>
     @endcan
-    @can('news-list')
+    {{-- @can('news-list')
         <ul>
             <li class="{{ set_active('news*') }}">
                 <a href="{{ route('news.index') }}">
@@ -78,7 +78,7 @@
                 </a>
             </li>
         </ul>
-    @endcan
+    @endcan --}}
 
     @role('superadmin')
         @can('admins-list')

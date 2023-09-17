@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
             <h2>Edit Club</h2>
-            <form method="POST" action="{{ route('clubs.update', $club->id) }}">
+            <form method="POST" action="{{ route('clubs.update', $club->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -19,8 +19,13 @@
                     <label for="user">Kepala Club</label>
                     <select name="user" id="user" class="form-control @error('user') is-invalid @enderror">
                         @foreach ($users as $user)
-                            <option value="{{ $user->id }}" {{ $user->id == $club->iduser ? 'selected' : '' }}>
-                                {{ $user->name }}</option>
+                            @foreach ($cabors as $cabor)
+                                @if ($user->cabang_id == $cabor->id)
+                                    <option value="{{ $user->id }}" {{ $user->id == $club->iduser ? 'selected' : '' }}>
+                                        {{ $user->name }} {{ $user->lastname }} -
+                                        {{ $cabor->name }}</option>
+                                @endif
+                            @endforeach
                         @endforeach
                     </select>
                     @error('user')

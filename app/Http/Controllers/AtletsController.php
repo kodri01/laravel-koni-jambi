@@ -41,7 +41,7 @@ class AtletsController extends Controller
                 ->where('users.active_atlet', 1)
                 ->whereNull('atlets.deleted_at')
                 ->where('clubs.id', $club_id)
-                ->paginate(10);
+                ->paginate(20);
             return view('pages.clubs.atlets.index', compact('lists', 'club_id'));
         } else {
             $lists = DB::table('users')
@@ -52,7 +52,7 @@ class AtletsController extends Controller
                 ->whereNull('atlets.deleted_at')
                 ->where('clubs.id', $club_id)
                 ->where('clubs.cabang_id', auth::user()->cabang_id)
-                ->paginate(10);
+                ->paginate(20);
             return view('pages.clubs.atlets.index', compact('lists', 'club_id'));
         }
     }
@@ -96,6 +96,7 @@ class AtletsController extends Controller
             'lastname.required'   => 'Lastname wajib diisi',
             'lastname.min'        => 'Lastname minimal 3 karakter',
             'email.required'      => 'Email wajib diisi',
+            'email.unique'      => 'Email Sudah Terdaftar, Coba Email yang Lain',
             'pass.required'       => 'Password wajib diisi',
             'pass.min'            => 'Password minimal 3 karakter',
             'file.required'       => 'Foto profile wajib diupload',
@@ -294,8 +295,7 @@ class AtletsController extends Controller
 
     public function selectatlet($club_id)
     {
-        # code...
-        // $lists = User::join('atlets','users.id')
+
         $lists = User::where('active', 1)->where('active_atlet', 0)->get();
         $cabors = Cabor::get();
         $clubs = Club::find($club_id);

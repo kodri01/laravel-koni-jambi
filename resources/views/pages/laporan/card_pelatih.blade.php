@@ -88,7 +88,7 @@
             @endif
         @endforeach
 
-        <p class="membership-number">38{{ $pelatih->id }} 37263</p>
+        <p class="membership-number">{{ $pelatih->id }}</p>
     </div>
 
 </body>

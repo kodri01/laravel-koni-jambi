@@ -32,10 +32,10 @@ class TeamsController extends Controller
         $role = Role::where('id', $modelrole->role_id)->first();
         if ($role->name == 'superadmin') {
 
-            $teams = TeamModel::orderBy('id', 'ASC')->where('club_id', $club_id)->paginate(7);
+            $teams = TeamModel::orderBy('id', 'ASC')->where('club_id', $club_id)->paginate(10);
             return view('pages.clubs.teams.index', compact('teams', 'club_id'));
         } else {
-            $teams = TeamModel::where('cabang_id', auth::user()->cabang_id)->where('club_id', $club_id)->paginate(7);
+            $teams = TeamModel::where('cabang_id', auth::user()->cabang_id)->where('club_id', $club_id)->paginate(10);
             return view('pages.clubs.teams.index', compact('teams', 'club_id'));
         }
     }
@@ -216,7 +216,6 @@ class TeamsController extends Controller
 
         if (!empty($request->file)) {
             File::delete(public_path("uploads/" . $team->file));
-
             $namefile = str_replace(' ', '_', $request->file->getClientOriginalName());
             $filename  = $namefile . '_' . time() . '.' . $request->file->extension();
             $request->file->move(public_path('uploads'), $filename);
@@ -224,7 +223,6 @@ class TeamsController extends Controller
 
         if (!empty($request->cover)) {
             File::delete(public_path("uploads/" . $team->cover));
-
             $namefile1 = str_replace(' ', '_', $request->cover->getClientOriginalName());
             $filename1  = $namefile1 . '_' . time() . '.' . $request->cover->extension();
             $request->cover->move(public_path('uploads'), $filename1);

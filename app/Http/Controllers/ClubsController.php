@@ -62,7 +62,7 @@ class ClubsController extends Controller
         // $users = User::where('active', 1)->get();
         $users = DB::table('users')->join('model_has_roles', 'users.id', 'model_has_roles.model_id')
             ->select('users.*', 'model_has_roles.role_id', 'model_has_roles.model_id')
-            ->where('model_has_roles.role_id', 2)->paginate(5);
+            ->where('model_has_roles.role_id', 2)->paginate(20);
         $cabors = Cabor::get();
         return view('pages.clubs.add', compact('users', 'cabors'));
     }
