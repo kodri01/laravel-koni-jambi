@@ -31,9 +31,11 @@
                         <label for="listgame">List Game</label>
                         <select name="listgame" id="listgame" class="form-control @error('listgame') is-invalid @enderror">
                             @foreach ($games as $game)
-                                <option value="{{ $game->id }}"
-                                    {{ $game->id == $team->games ? 'selected="selected"' : '' }}>{{ $game->game_name }}
-                                </option>
+                                @if ($game->cabang_id == $team->cabang_id)
+                                    <option value="{{ $game->id }}"
+                                        {{ $game->id == $team->games ? 'selected="selected"' : '' }}>
+                                        {{ $game->game_name }}</option>
+                                @endif
                             @endforeach
                         </select>
                         @error('listgame')

@@ -322,15 +322,13 @@ class AtletsController extends Controller
 
     public function requestatlet($club_id)
     {
-        # code...
-        // $lists = Requestatlets::where('club_id',$club_id)
-        //         ->where('approve',0)
-        //         ->whereNull('deleted_at')->paginate(5);
         $lists = DB::table('request_atlets')
             ->join('users', 'request_atlets.user_id', 'users.id')
+            ->join('clubs', 'request_atlets.club_id', 'clubs.id')
             ->select('users.*', 'users.id as user_id', 'request_atlets.*')
             ->where('request_atlets.approve', 0)
-            ->whereNull('request_atlets.deleted_at')->paginate(5);
+            ->where('clubs.id', $club_id)
+            ->whereNull('request_atlets.deleted_at')->paginate(10);
         // return dd($lists);
         return view('pages.clubs.atlets.request', compact('lists', 'club_id'));
     }

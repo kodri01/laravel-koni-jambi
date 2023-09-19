@@ -57,7 +57,7 @@ class DashboardController extends Controller
         } elseif ($role->name == 'Atlet') {
             return view('pages.dashboard.dashboard', compact('news', 'awards', 'events', 'games', 'clubs'));
         } else {
-            return view('pages.dashboard.lead_dashboard', compact('clubs'));
+            return view('pages.dashboard.lead_dashboard', compact('clubs', 'teams'));
         }
     }
 

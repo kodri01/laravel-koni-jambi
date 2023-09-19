@@ -9,6 +9,8 @@ use App\Models\Pelatih;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 use function PHPUnit\Framework\at;
@@ -32,96 +34,194 @@ class LaporanController extends Controller
 
         $searchQuery = $request->input('search', '');
 
-        $atlet = DB::table('users')
-            ->join('atlets', 'users.id', '=', 'atlets.iduser')
-            ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
-            ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
-            ->select(
-                'users.*',
-                'atlets.*',
-                'users.name as atlet_name',
-                'clubs.club_name',
-                'atlets.id as atlet_id',
-                'cabors.name as cabang',
-                'atlets.created_at as tahun'
-            )
-            ->where('users.active_atlet', 1)
-            ->whereNull('atlets.deleted_at')
-            ->orderBy('name', 'asc');
-        if (!empty($searchQuery)) {
-            $atlet->where(function ($query) use ($searchQuery) {
-                $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
-                    ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%')
-                    ->orWhere('cabors.name', 'LIKE', '%' . $searchQuery . '%');
-            });
+        $modelrole = DB::table('model_has_roles')->where('model_id', auth()->user()->id)->first();
+        $role = Role::where('id', $modelrole->role_id)->first();
+        if ($role->name == 'superadmin') {
+            $atlet = DB::table('users')
+                ->join('atlets', 'users.id', '=', 'atlets.iduser')
+                ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
+                ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+                ->select(
+                    'users.*',
+                    'atlets.*',
+                    'users.name as atlet_name',
+                    'clubs.club_name',
+                    'atlets.id as atlet_id',
+                    'cabors.name as cabang',
+                    'atlets.created_at as tahun'
+                )
+                ->where('users.active_atlet', 1)
+                ->whereNull('atlets.deleted_at')
+                ->orderBy('name', 'asc');
+            if (!empty($searchQuery)) {
+                $atlet->where(function ($query) use ($searchQuery) {
+                    $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
+                        ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%')
+                        ->orWhere('cabors.name', 'LIKE', '%' . $searchQuery . '%');
+                });
+            }
+
+            $atlet = $atlet->paginate(100);
+
+
+            $teams = DB::table('teams')
+                ->join('clubs', 'teams.club_id', 'clubs.id')
+                ->join('cabors', 'clubs.cabang_id', 'cabors.id')
+                ->join('users as leaders', 'teams.leader_team', '=', 'leaders.id')
+                ->select(
+                    'teams.*',
+                    'teams.file as file_team',
+                    'clubs.*',
+                    'cabors.*',
+                    'cabors.name as cabang',
+                    'leaders.name as leader_team',
+                    'leaders.lastname as leader_lastname',
+                )
+                ->whereNull('teams.deleted_at')
+                ->orderBy('team_name', 'asc')
+                ->paginate(100);
+
+            foreach ($teams as $team) {
+                $atletIds = json_decode($team->atlet);
+                $atletUsers = User::whereIn('id', $atletIds)->get();
+                $team->anggota_team = $atletUsers;
+            }
+
+
+            $pelatih = DB::table('users')
+                ->join('pelatih', 'users.id', '=', 'pelatih.user_id')
+                ->join('clubs', 'pelatih.club_id', '=', 'clubs.id')
+                ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+                ->select(
+                    'users.*',
+                    'pelatih.*',
+                    'users.name as pelatih_name',
+                    'clubs.club_name',
+                    'pelatih.id as pelatih_id',
+                    'cabors.name as cabang',
+                    'pelatih.created_at as tahun'
+                )
+                ->where('users.active', 99)
+                ->whereNull('pelatih.deleted_at')
+                ->orderBy('name', 'asc');
+
+            if (!empty($searchQuery)) {
+                $pelatih->where(function ($query) use ($searchQuery) {
+                    $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
+                        ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%');
+                });
+            }
+
+            $pelatih = $pelatih->paginate(100);
+
+            $tahunAtlet = Atlet::select(DB::raw('YEAR(created_at) as year'))
+                ->distinct()
+                ->pluck('year')
+                ->sort()
+                ->toArray();
+
+            $tahunPelatih = Pelatih::select(DB::raw('YEAR(created_at) as year'))
+                ->distinct()
+                ->pluck('year')
+                ->sort()
+                ->toArray();
+
+            return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih', 'tahunAtlet', 'tahunPelatih'));
+        } else {
+            $atlet = DB::table('users')
+                ->join('atlets', 'users.id', '=', 'atlets.iduser')
+                ->join('clubs', 'atlets.club_id', '=', 'clubs.id')
+                ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+                ->select(
+                    'users.*',
+                    'atlets.*',
+                    'users.name as atlet_name',
+                    'clubs.club_name',
+                    'atlets.id as atlet_id',
+                    'cabors.name as cabang',
+                    'atlets.created_at as tahun'
+                )
+                ->where('users.active_atlet', 1)
+                ->whereNull('atlets.deleted_at')
+                ->where('cabors.id', auth()->user()->cabang_id)
+                ->orderBy('name', 'asc');
+            if (!empty($searchQuery)) {
+                $atlet->where(function ($query) use ($searchQuery) {
+                    $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
+                        ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%')
+                        ->orWhere('cabors.name', 'LIKE', '%' . $searchQuery . '%');
+                });
+            }
+
+            $atlet = $atlet->paginate(100);
+
+
+            $teams = DB::table('teams')
+                ->join('clubs', 'teams.club_id', 'clubs.id')
+                ->join('cabors', 'clubs.cabang_id', 'cabors.id')
+                ->join('users as leaders', 'teams.leader_team', '=', 'leaders.id')
+                ->select(
+                    'teams.*',
+                    'teams.file as file_team',
+                    'clubs.*',
+                    'cabors.*',
+                    'cabors.name as cabang',
+                    'leaders.name as leader_team',
+                    'leaders.lastname as leader_lastname',
+                )
+                ->whereNull('teams.deleted_at')
+                ->where('cabors.id', auth()->user()->cabang_id)
+                ->orderBy('team_name', 'asc')
+                ->paginate(100);
+
+            foreach ($teams as $team) {
+                $atletIds = json_decode($team->atlet);
+                $atletUsers = User::whereIn('id', $atletIds)->get();
+                $team->anggota_team = $atletUsers;
+            }
+
+
+            $pelatih = DB::table('users')
+                ->join('pelatih', 'users.id', '=', 'pelatih.user_id')
+                ->join('clubs', 'pelatih.club_id', '=', 'clubs.id')
+                ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
+                ->select(
+                    'users.*',
+                    'pelatih.*',
+                    'users.name as pelatih_name',
+                    'clubs.club_name',
+                    'pelatih.id as pelatih_id',
+                    'cabors.name as cabang',
+                    'pelatih.created_at as tahun'
+                )
+                ->where('users.active', 99)
+                ->where('cabors.id', auth()->user()->cabang_id)
+                ->whereNull('pelatih.deleted_at')
+                ->orderBy('name', 'asc');
+
+            if (!empty($searchQuery)) {
+                $pelatih->where(function ($query) use ($searchQuery) {
+                    $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
+                        ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%');
+                });
+            }
+
+            $pelatih = $pelatih->paginate(100);
+
+            $tahunAtlet = Atlet::select(DB::raw('YEAR(created_at) as year'))
+                ->distinct()
+                ->pluck('year')
+                ->sort()
+                ->toArray();
+
+            $tahunPelatih = Pelatih::select(DB::raw('YEAR(created_at) as year'))
+                ->distinct()
+                ->pluck('year')
+                ->sort()
+                ->toArray();
+
+            return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih', 'tahunAtlet', 'tahunPelatih'));
         }
-
-        $atlet = $atlet->paginate(100);
-
-
-        $teams = DB::table('teams')
-            ->join('clubs', 'teams.club_id', 'clubs.id')
-            ->join('cabors', 'clubs.cabang_id', 'cabors.id')
-            ->join('users as leaders', 'teams.leader_team', '=', 'leaders.id')
-            ->select(
-                'teams.*',
-                'teams.file as file_team',
-                'clubs.*',
-                'cabors.*',
-                'cabors.name as cabang',
-                'leaders.name as leader_team',
-                'leaders.lastname as leader_lastname',
-            )
-            ->whereNull('teams.deleted_at')
-            ->orderBy('team_name', 'asc')
-            ->paginate(100);
-
-        foreach ($teams as $team) {
-            $atletIds = json_decode($team->atlet);
-            $atletUsers = User::whereIn('id', $atletIds)->get();
-            $team->anggota_team = $atletUsers;
-        }
-
-
-        $pelatih = DB::table('users')
-            ->join('pelatih', 'users.id', '=', 'pelatih.user_id')
-            ->join('clubs', 'pelatih.club_id', '=', 'clubs.id')
-            ->join('cabors', 'clubs.cabang_id', '=', 'cabors.id')
-            ->select(
-                'users.*',
-                'pelatih.*',
-                'users.name as pelatih_name',
-                'clubs.club_name',
-                'pelatih.id as pelatih_id',
-                'cabors.name as cabang',
-                'pelatih.created_at as tahun'
-            )
-            ->where('users.active', 99)
-            ->whereNull('pelatih.deleted_at')
-            ->orderBy('name', 'asc');
-
-        if (!empty($searchQuery)) {
-            $pelatih->where(function ($query) use ($searchQuery) {
-                $query->where('users.name', 'LIKE', '%' . $searchQuery . '%')
-                    ->orWhere('users.lastname', 'LIKE', '%' . $searchQuery . '%');
-            });
-        }
-
-        $pelatih = $pelatih->paginate(100);
-
-        $tahunAtlet = Atlet::select(DB::raw('YEAR(created_at) as year'))
-            ->distinct()
-            ->pluck('year')
-            ->sort()
-            ->toArray();
-
-        $tahunPelatih = Pelatih::select(DB::raw('YEAR(created_at) as year'))
-            ->distinct()
-            ->pluck('year')
-            ->sort()
-            ->toArray();
-
-        return view('pages.laporan.laporan', compact('atlet', 'teams', 'pelatih', 'tahunAtlet', 'tahunPelatih'));
     }
 
 

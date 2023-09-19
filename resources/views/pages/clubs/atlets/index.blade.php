@@ -42,7 +42,7 @@
                                 <td>
                                     @if (!empty($list->profile_pic))
                                         <img style="width: 50px; height: auto;" class="img-thumbnail text-center"
-                                            src="{{ asset('uploads/' . $list->profile_pic) }}" alt="Image News" />
+                                            src="{{ asset('uploads/' . $list->profile_pic) }}" alt="Image" />
                                     @endif
                                 </td>
                                 <td>

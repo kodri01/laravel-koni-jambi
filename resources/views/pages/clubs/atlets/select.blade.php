@@ -10,7 +10,9 @@
                     <label for="selectuser">Nama Atlet</label>
                     <select name="selectuser" id="selectuser" class="form-control text-capitalize">
                         @foreach ($lists as $list)
-                            <option value="{{ $list->id }}">{{ $list->name }} {{ $list->lastname }}</option>
+                            @if ($list->cabang_id == $clubs->cabang_id)
+                                <option value="{{ $list->id }}">{{ $list->name }} {{ $list->lastname }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

@@ -162,7 +162,7 @@ class TeamsController extends Controller
             ->join('atlets', 'users.id', 'atlets.iduser')
             ->join('clubs', 'atlets.club_id', 'clubs.id')
             ->select('users.*', 'atlets.iduser as atlet_user')
-            ->where('users.active', 1)
+            ->where('users.active_atlet', 1)
             ->where('clubs.id', $club_id)
             ->where('atlets.deleted_at', null)
             ->get();

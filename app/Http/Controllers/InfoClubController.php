@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Club;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,16 +39,15 @@ class InfoClubController extends Controller
             ->distinct()
             ->get();
 
-
         $de = [];
         foreach ($lists as $item) {
             $de[] = $item->atlet;
         }
+
         $users = User::where('active_atlet', 1)->get();
-        $pelatih = DB::table('users')->select('id as pelatih_id', 'name as pelatih_name', 'lastname as pelatih_lastname')->where('active', 99)->get();
-        // $user = User::orderBy('id')where('active', 99)->get();
-        // return dd(compact('lists','users'));
-        // Club::where('club_id',auth()->user()->id)->get();
+        $pelatih = DB::table('users')
+            ->select('id as pelatih_id', 'name as pelatih_name', 'lastname as pelatih_lastname')
+            ->where('active', 99)->get();
         return view('pages.infoclub.index', compact('lists', 'users',  'pelatih'));
     }
 }
